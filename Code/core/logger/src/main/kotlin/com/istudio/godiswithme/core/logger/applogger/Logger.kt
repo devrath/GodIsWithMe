@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.core.logger
+package com.istudio.godiswithme.core.logger.applogger
 
 interface Logger {
     fun d(tag: String, msg: String)
