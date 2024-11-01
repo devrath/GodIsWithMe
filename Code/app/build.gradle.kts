@@ -62,6 +62,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // Timber
+    implementation(libs.timber)
+
     // Koin
     implementation(libs.koin.core)
     implementation(libs.koin.android)

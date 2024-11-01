@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.core.logger.applogger
+package com.istudio.godiswithme.core.logger.applogger.local
 
 import timber.log.Timber
 
