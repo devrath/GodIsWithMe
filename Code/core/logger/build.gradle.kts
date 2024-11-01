@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "com.istudio.godiswithme.core.logger"
-    compileSdk = 34
+    compileSdk = rootProject.extra["compileSdkVersion"] as Int
 
     defaultConfig {
-        minSdk = 24
+        minSdk = rootProject.extra["minSdkVersion"] as Int
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

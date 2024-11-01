@@ -2,12 +2,8 @@ package com.istudio.godiswithme.application
 
 import android.app.Application
 import com.istudio.godiswithme.core.logger.applogger.timber.TimberInit
-import com.istudio.godiswithme.core.logger.di.crashlyticsLoggerModule
-import com.istudio.godiswithme.core.logger.di.firebaseModule
-import com.istudio.godiswithme.core.logger.di.loggerModule
-import com.istudio.godiswithme.core.logger.di.timberDebugModule
-import com.istudio.godiswithme.core.logger.di.timberInitializationModule
-import com.istudio.godiswithme.core.logger.di.timberReleaseModule
+import com.istudio.godiswithme.di.firebaseParentModule
+import com.istudio.godiswithme.di.loggerParentModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -32,13 +28,7 @@ class MainApplication : Application(), KoinComponent {
         startKoin {
             androidContext(this@MainApplication)
             androidLogger()
-            modules(
-                loggerModule,
-                timberDebugModule,
-                timberReleaseModule,
-                timberInitializationModule
-            )
-            modules(firebaseModule, crashlyticsLoggerModule)
+            modules(loggerParentModule,firebaseParentModule)
         }
     }
 

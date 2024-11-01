@@ -7,3 +7,10 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.google.services) apply false
 }
+
+extra["versionCode"] = 1
+extra["versionName"] = "1.0"
+
+extra["compileSdkVersion"] = 35
+extra["minSdkVersion"] = 24
+extra["targetSdkVersion"] = 34
