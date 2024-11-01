@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:logger"))
+    implementation(projects.core.logger)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
