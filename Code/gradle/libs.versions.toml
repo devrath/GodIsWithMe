@@ -21,6 +21,7 @@ glideCompose = "1.0.0-alpha.1"
 coil = "2.6.0"
 media3_version = "1.4.1"
 timber = "5.0.1"
+lottieCompose = "6.3.0"
 # Firebase
 google-services = "4.4.0"
 firebase-appdistribution = "4.0.1"
@@ -52,6 +53,9 @@ androidx-material-icons-extended = { group = "androidx.compose.material", name =
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 androidx-glide = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glideCompose" }
 androidx-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+lotte-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottieCompose" }
+compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+
 # Koin
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 koin-core = { module = "io.insert-koin:koin-core" }

@@ -2,4 +2,10 @@
 <resources>
 
     <style name="Theme.GodIsWithMe" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.AnimatedSplashScreen" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
 </resources>
