@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.androidx.material3.size)
     implementation(libs.lotte.compose)
     implementation(libs.compose.navigation)
+    implementation(libs.core.splash)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
