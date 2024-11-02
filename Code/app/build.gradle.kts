@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.firebase.performance)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.kotlin.serialization)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -61,8 +62,12 @@ dependencies {
     implementation(libs.compose.navigation)
     implementation(libs.core.splash)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
-    implementation(libs.androidx.compose.material3.adaptive.navigation)
+    implementation(libs.androidx.material3.adaptive.navigation.suite.android)
+    implementation(libs.androidx.adaptive)
+    implementation(libs.androidx.adaptive.layout)
+    implementation(libs.androidx.adaptive.navigation)
+    implementation(libs.androidx.coil)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

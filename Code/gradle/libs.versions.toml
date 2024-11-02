@@ -1,4 +1,5 @@
 [versions]
+adaptiveNavigation = "1.0.0"
 agp = "8.7.1"
 kotlin = "2.0.0"
 coreKtx = "1.15.0"
@@ -24,8 +25,8 @@ timber = "5.0.1"
 lottieCompose = "6.3.0"
 coreSplashscreen = "1.0.1"
 serialization = "1.6.3"
-adaptiveNavigationSuite = "1.0.0-alpha07"
-material3-adaptive = "1.0.0-beta01"
+material3AdaptiveNavigationSuiteAndroid = "1.3.1"
+
 # Firebase
 google-services = "4.4.0"
 firebase-appdistribution = "4.0.1"
@@ -62,8 +63,10 @@ lotte-compose = { group = "com.airbnb.android", name = "lottie-compose", version
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 core-splash = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
-androidx-compose-material3-adaptive-navigation-suite = { module = "androidx.compose.material3:material3-adaptive-navigation-suite", version.ref = "adaptiveNavigationSuite" }
-androidx-compose-material3-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation", version.ref = "material3-adaptive" }
+androidx-material3-adaptive-navigation-suite-android = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite-android", version.ref = "material3AdaptiveNavigationSuiteAndroid" }
+androidx-adaptive = { module = "androidx.compose.material3.adaptive:adaptive", version.ref = "adaptiveNavigation" }
+androidx-adaptive-layout = { module = "androidx.compose.material3.adaptive:adaptive-layout", version.ref = "adaptiveNavigation" }
+androidx-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation", version.ref = "adaptiveNavigation" }
 
 # Koin
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }

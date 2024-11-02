@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">GodIsWithMe</string>
+
+    <string name="home">Home</string>
+    <string name="favorites">Favorite</string>
+    <string name="shopping">Shopping</string>
+    <string name="profile">Profile</string>
 </resources>
