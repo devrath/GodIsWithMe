@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.istudio.godiswithme.features.home.HomeScreen
 import com.istudio.godiswithme.features.splash.SplashScreen
 
 @Composable
@@ -23,14 +24,7 @@ fun SetupNavGraph(navController: NavHostController) {
             SplashScreen(navController = navController)
         }
         composable(route = Screen.Home.route) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "Hello World", color = Color.Black)
-            }
+            HomeScreen(navController = navController)
         }
     }
 }

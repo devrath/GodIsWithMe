@@ -31,7 +31,9 @@ fun SplashScreen(navController: NavHostController) {
             progress = { logoAnimationState.progress }
         )
         if (logoAnimationState.isAtEnd && logoAnimationState.isPlaying) {
-            navController.navigate(Screen.Home.route)
+            navController.navigate(Screen.Home.route) {
+                popUpTo(Screen.Splash.route) { inclusive = true }
+            }
         }
     }
 }
