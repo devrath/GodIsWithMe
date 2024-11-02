@@ -37,7 +37,8 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun MainSupportingScaffold(modifier: Modifier = Modifier) {
-    val navigator = rememberSupportingPaneScaffoldNavigator<TravelImage>()
+
+    val navigator = rememberSupportingPaneScaffoldNavigator<GodImage>()
 
     BackHandler(navigator.canNavigateBack()) {
         navigator.navigateBack()
@@ -53,7 +54,7 @@ fun MainSupportingScaffold(modifier: Modifier = Modifier) {
         },
         supportingPane = {
             navigator.currentDestination?.content?.let {
-                SupportinPane(travelImage = it) {
+                SupportinPane(godImage = it) {
                     navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, it)
                 }
             }
@@ -61,7 +62,7 @@ fun MainSupportingScaffold(modifier: Modifier = Modifier) {
         },
         extraPane = {
             navigator.currentDestination?.content?.let {
-                ExtraPane(travelImage = it)
+                ExtraPane(godImage = it)
             }
         }
     )
@@ -70,13 +71,13 @@ fun MainSupportingScaffold(modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainPane(modifier: Modifier = Modifier, onClick: (TravelImage) -> Unit) {
+fun MainPane(modifier: Modifier = Modifier, onClick: (GodImage) -> Unit) {
     Scaffold(topBar = { TopAppBar(title = { Text(text = "My Trips Images") }) }) {
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(3),
             modifier = Modifier.padding(it)
         ) {
-            items(travelImages) {
+            items(godImages) {
                 Image(
                     painter = painterResource(id = it.res), contentDescription = null,
                     modifier = Modifier
@@ -91,11 +92,11 @@ fun MainPane(modifier: Modifier = Modifier, onClick: (TravelImage) -> Unit) {
 @Composable
 fun SupportinPane(
     modifier: Modifier = Modifier,
-    travelImage: TravelImage,
-    onClick: (TravelImage) -> Unit
+    godImage: GodImage,
+    onClick: (GodImage) -> Unit
 ) {
     Scaffold(floatingActionButton = {
-        FloatingActionButton(onClick = { onClick.invoke(travelImage) }) {
+        FloatingActionButton(onClick = { onClick.invoke(godImage) }) {
             Icon(imageVector = Icons.Default.Info, contentDescription = null)
         }
     }) {
@@ -105,7 +106,7 @@ fun SupportinPane(
                 .fillMaxSize(), contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = travelImage.res), contentDescription = null,
+                painter = painterResource(id = godImage.res), contentDescription = null,
                 modifier = Modifier.fillMaxSize()
             )
         }
@@ -116,7 +117,7 @@ fun SupportinPane(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExtraPane(modifier: Modifier = Modifier, travelImage: TravelImage) {
+fun ExtraPane(modifier: Modifier = Modifier, godImage: GodImage) {
     Scaffold(topBar = { TopAppBar(title = { Text(text = "Sri Lanka trip") }) }) {
         Column(
             modifier = Modifier
@@ -126,7 +127,7 @@ fun ExtraPane(modifier: Modifier = Modifier, travelImage: TravelImage) {
         ) {
 
             Image(
-                painter = painterResource(id = travelImage.res), contentDescription = null,
+                painter = painterResource(id = godImage.res), contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(300.dp)
@@ -134,13 +135,13 @@ fun ExtraPane(modifier: Modifier = Modifier, travelImage: TravelImage) {
 
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = travelImage.title,
+                text = godImage.title,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(horizontal = 12.dp)
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = travelImage.description,
+                text = godImage.description,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(horizontal = 12.dp)
             )

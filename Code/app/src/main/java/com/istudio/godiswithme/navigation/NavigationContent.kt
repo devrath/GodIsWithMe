@@ -1,7 +1,5 @@
 package com.istudio.godiswithme.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
@@ -10,7 +8,6 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.window.core.layout.WindowWidthSizeClass
@@ -18,7 +15,7 @@ import com.istudio.godiswithme.features.gallery.ListDetailsScaffold
 
 @Composable
 fun NavigationContent(modifier: Modifier = Modifier) {
-    val selected = rememberSaveable { mutableStateOf(AppDest.HOME.name) }
+    val selected = rememberSaveable { mutableStateOf(AppDest.AUDIO_GALLERY.name) }
 
     val windowAdaptiveInfo = currentWindowAdaptiveInfo()
     val layoutType = when (windowAdaptiveInfo.windowSizeClass.windowWidthSizeClass) {
@@ -52,13 +49,12 @@ fun NavigationContent(modifier: Modifier = Modifier) {
         })
     {
         when (selected.value) {
-            AppDest.HOME.name -> {
+            AppDest.AUDIO_GALLERY.name -> {
                 ListDetailsScaffold()
             }
 
-            AppDest.FAVORITE.name -> {
+            AppDest.IMAGE_GALLERY.name -> {
                 MainSupportingScaffold()
-
             }
         }
     }
