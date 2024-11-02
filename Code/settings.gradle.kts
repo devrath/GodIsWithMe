@@ -22,12 +22,9 @@ dependencyResolutionManagement {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "GodIsWithMe"
 include(":app")
-include(":core:presentation:designsystem")
-include(":core:presentation:ui")
 include(":core:domain")
 include(":core:data")
 include(":core:database")
-include(":features")
 include(":core:player")
 include(":core:network")
 include(":core:logger")
