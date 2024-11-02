@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.istudio.godiswithme.navigation.SetupNavGraph
 import com.istudio.godiswithme.ux.designsystem.GodIsWithMeTheme
+import com.istudio.godiswithme.ux.designsystem.preview.WindowSizeClassPreviews
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -37,7 +38,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
+@WindowSizeClassPreviews
 @Composable
 fun GreetingPreview() {
     GodIsWithMeTheme {
