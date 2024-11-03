@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,6 +35,7 @@ import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaf
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
@@ -76,7 +78,7 @@ fun MainSupportingScaffold(modifier: Modifier = Modifier) {
 fun MainPane(modifier: Modifier = Modifier, onClick: (GodImage) -> Unit) {
     Scaffold(topBar = { TopAppBar(title = { Text(text = "God Images") }) }) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
+            columns = GridCells.Adaptive(minSize = 210.dp), // Set the minimum size for each cell
             modifier = Modifier.padding(it)
         ) {
             items(godImages) { godImage ->
@@ -84,7 +86,8 @@ fun MainPane(modifier: Modifier = Modifier, onClick: (GodImage) -> Unit) {
                     painter = painterResource(id = godImage.res),
                     contentDescription = godImage.title,
                     modifier = Modifier
-                        .padding(horizontal = 2.dp, vertical = 1.dp)
+                        .fillMaxWidth()
+                        .padding(2.dp)
                         .clickable { onClick.invoke(godImage) }
                 )
             }
