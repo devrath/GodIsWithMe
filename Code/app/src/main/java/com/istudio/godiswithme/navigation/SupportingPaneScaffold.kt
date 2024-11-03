@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -53,12 +56,11 @@ fun MainSupportingScaffold(modifier: Modifier = Modifier) {
             }
         },
         supportingPane = {
-            navigator.currentDestination?.content?.let {
-                SupportinPane(godImage = it) {
+            navigator.currentDestination?.content?.let { it ->
+                SupportingPane(godImage = it) {
                     navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, it)
                 }
             }
-
         },
         extraPane = {
             navigator.currentDestination?.content?.let {
@@ -72,17 +74,18 @@ fun MainSupportingScaffold(modifier: Modifier = Modifier) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainPane(modifier: Modifier = Modifier, onClick: (GodImage) -> Unit) {
-    Scaffold(topBar = { TopAppBar(title = { Text(text = "My Trips Images") }) }) {
-        LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Fixed(3),
+    Scaffold(topBar = { TopAppBar(title = { Text(text = "God Images") }) }) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
             modifier = Modifier.padding(it)
         ) {
-            items(godImages) {
+            items(godImages) { godImage ->
                 Image(
-                    painter = painterResource(id = it.res), contentDescription = null,
+                    painter = painterResource(id = godImage.res),
+                    contentDescription = godImage.title,
                     modifier = Modifier
                         .padding(horizontal = 2.dp, vertical = 1.dp)
-                        .clickable { onClick.invoke(it) }
+                        .clickable { onClick.invoke(godImage) }
                 )
             }
         }
@@ -90,7 +93,7 @@ fun MainPane(modifier: Modifier = Modifier, onClick: (GodImage) -> Unit) {
 }
 
 @Composable
-fun SupportinPane(
+fun SupportingPane(
     modifier: Modifier = Modifier,
     godImage: GodImage,
     onClick: (GodImage) -> Unit
@@ -106,19 +109,17 @@ fun SupportinPane(
                 .fillMaxSize(), contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = godImage.res), contentDescription = null,
+                painter = painterResource(id = godImage.res), contentDescription = "Click for more information",
                 modifier = Modifier.fillMaxSize()
             )
         }
     }
-
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExtraPane(modifier: Modifier = Modifier, godImage: GodImage) {
-    Scaffold(topBar = { TopAppBar(title = { Text(text = "Sri Lanka trip") }) }) {
+    Scaffold(topBar = { TopAppBar(title = { Text(text = "Details") }) }) {
         Column(
             modifier = Modifier
                 .padding(it)
