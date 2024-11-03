@@ -17,7 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.window.core.layout.WindowWidthSizeClass
 import com.istudio.godiswithme.R
 import com.istudio.godiswithme.features.gallery.ListDetailsScaffold
-import com.istudio.godiswithme.navigation.MainSupportingScaffold
+import com.istudio.godiswithme.features.gallery.image.ImageGalleryScreen
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
@@ -45,14 +45,14 @@ fun HomeScreen(navController: NavHostController) {
         })
     {
         when (selected.value) {
-            HomeDest.IMAGE_GALLERY.name -> MainSupportingScaffold()
+            HomeDest.IMAGE_GALLERY.name -> ImageGalleryScreen()
             HomeDest.AUDIO_GALLERY.name -> ListDetailsScaffold()
         }
     }
 }
 
 enum class HomeDest(val resId:Int, val imageVector: ImageVector) {
-    IMAGE_GALLERY(R.string.favorites, imageVector = Icons.Default.Image),
-    AUDIO_GALLERY(R.string.home, imageVector = Icons.Default.MusicNote),
+    IMAGE_GALLERY(R.string.images, imageVector = Icons.Default.Image),
+    AUDIO_GALLERY(R.string.audio, imageVector = Icons.Default.MusicNote),
 }
 
