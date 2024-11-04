@@ -35,15 +35,13 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.istudio.godiswithme.navigation.GodImage
-import com.istudio.godiswithme.navigation.godImages
-import org.koin.androidx.compose.getViewModel
+import com.istudio.godiswithme.architecture.domain_entity.GodData
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun ImageGalleryScreen() {
-    val navigator = rememberSupportingPaneScaffoldNavigator<GodImage>()
+    val navigator = rememberSupportingPaneScaffoldNavigator<GodData>()
 
     BackHandler(navigator.canNavigateBack()) {
         navigator.navigateBack()
@@ -59,14 +57,14 @@ fun ImageGalleryScreen() {
         },
         supportingPane = {
             navigator.currentDestination?.content?.let { it ->
-                SupportingPane(godImage = it) {
+                SupportingPane(godData = it) {
                     navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, it)
                 }
             }
         },
         extraPane = {
             navigator.currentDestination?.content?.let {
-                ExtraPane(godImage = it)
+                ExtraPane(godData = it)
             }
         }
     )
@@ -75,7 +73,7 @@ fun ImageGalleryScreen() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainPane(modifier: Modifier = Modifier, onClick: (GodImage) -> Unit) {
+fun MainPane(modifier: Modifier = Modifier, onClick: (GodData) -> Unit) {
 
     val viewModel: ImageGalleryScreenViewModel = koinViewModel()
 
@@ -84,16 +82,16 @@ fun MainPane(modifier: Modifier = Modifier, onClick: (GodImage) -> Unit) {
             columns = GridCells.Adaptive(minSize = 210.dp), // Set the minimum size for each cell
             modifier = Modifier.padding(it)
         ) {
-            items(viewModel.state.value) { godImage ->
-                val bitmapImage = godImage.godImage
+            items(viewModel.state.value) { godData ->
+                val bitmapImage = godData.godImage
                 if (bitmapImage != null) {
                     Image(
-                        painter = BitmapPainter(bitmapImage.asImageBitmap()), // Use BitmapPainter for Bitmap
-                        contentDescription = null, // Set contentDescription to null if not needed
+                        painter = BitmapPainter(bitmapImage.asImageBitmap()),
+                        contentDescription = godData.godName,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(2.dp)
-                        //.clickable { onClick.invoke(godImage) }
+                        .clickable { onClick.invoke(godData) }
                     )
                 }
             }
@@ -104,11 +102,11 @@ fun MainPane(modifier: Modifier = Modifier, onClick: (GodImage) -> Unit) {
 @Composable
 fun SupportingPane(
     modifier: Modifier = Modifier,
-    godImage: GodImage,
-    onClick: (GodImage) -> Unit
+    godData: GodData,
+    onClick: (GodData) -> Unit
 ) {
     Scaffold(floatingActionButton = {
-        FloatingActionButton(onClick = { onClick.invoke(godImage) }) {
+        FloatingActionButton(onClick = { onClick.invoke(godData) }) {
             Icon(imageVector = Icons.Default.Info, contentDescription = null)
         }
     }) {
@@ -117,17 +115,21 @@ fun SupportingPane(
                 .padding(it)
                 .fillMaxSize(), contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(id = godImage.res), contentDescription = "Click for more information",
-                modifier = Modifier.fillMaxSize()
-            )
+            val bitmapImage = godData.godImage
+            if (bitmapImage != null) {
+                Image(
+                    painter = BitmapPainter(bitmapImage.asImageBitmap()),
+                    contentDescription = "Click for more information",
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExtraPane(modifier: Modifier = Modifier, godImage: GodImage) {
+fun ExtraPane(modifier: Modifier = Modifier, godData: GodData) {
     Scaffold(topBar = { TopAppBar(title = { Text(text = "Details") }) }) {
         Column(
             modifier = Modifier
@@ -135,23 +137,27 @@ fun ExtraPane(modifier: Modifier = Modifier, godImage: GodImage) {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
+            val bitmapImage = godData.godImage
+            if (bitmapImage != null) {
+                Image(
+                    painter = BitmapPainter(bitmapImage.asImageBitmap()),
+                    contentDescription = godData.godName,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                )
+            }
 
-            Image(
-                painter = painterResource(id = godImage.res), contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(300.dp)
-            )
 
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = godImage.title,
+                text = godData.godName,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(horizontal = 12.dp)
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = godImage.description,
+                text = godData.description,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(horizontal = 12.dp)
             )
