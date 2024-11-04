@@ -10,5 +10,6 @@ data class ContentData(
     val language: String,
     @SerialName("language-code") val languageCode: String,
     val description: String,
+    val songs: List<Song> = emptyList(),
     @Transient var imageBitmap: Bitmap? = null
 )
