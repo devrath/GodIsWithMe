@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.features.home
+package com.istudio.godiswithme.architecture.features.home
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
@@ -16,8 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.window.core.layout.WindowWidthSizeClass
 import com.istudio.godiswithme.R
-import com.istudio.godiswithme.features.gallery.ListDetailsScaffold
-import com.istudio.godiswithme.features.gallery.image.ImageGalleryScreen
+import com.istudio.godiswithme.architecture.features.gallery.ListDetailsScaffold
+import com.istudio.godiswithme.architecture.features.gallery.image.ImageGalleryScreen
 
 @Composable
 fun HomeScreen(navController: NavHostController) {

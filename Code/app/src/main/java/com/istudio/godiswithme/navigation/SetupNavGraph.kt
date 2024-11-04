@@ -11,8 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.istudio.godiswithme.features.home.HomeScreen
-import com.istudio.godiswithme.features.splash.SplashScreen
+import com.istudio.godiswithme.architecture.features.home.HomeScreen
+import com.istudio.godiswithme.architecture.features.splash.SplashScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController) {

@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.features.gallery.audio
+package com.istudio.godiswithme.architecture.features.gallery.audio
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

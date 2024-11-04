@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.features.gallery
+package com.istudio.godiswithme.architecture.features.gallery
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

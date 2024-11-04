@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.features.splash
+package com.istudio.godiswithme.architecture.features.splash
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

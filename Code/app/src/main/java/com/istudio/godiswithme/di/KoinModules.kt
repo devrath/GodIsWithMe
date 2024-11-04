@@ -6,12 +6,14 @@ import com.istudio.godiswithme.core.logger.di.loggerModule
 import com.istudio.godiswithme.core.logger.di.timberDebugModule
 import com.istudio.godiswithme.core.logger.di.timberInitializationModule
 import com.istudio.godiswithme.core.logger.di.timberReleaseModule
+import com.istudio.godiswithme.architecture.features.gallery.image.ImageGalleryScreenViewModel
 import com.istudio.godiswithme.main.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module{
     viewModel { MainViewModel() }
+    viewModel { ImageGalleryScreenViewModel() }
 }
 
 val loggerParentModule = module {

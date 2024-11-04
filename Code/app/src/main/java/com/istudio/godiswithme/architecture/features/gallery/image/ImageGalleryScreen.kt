@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.features.gallery.image
+package com.istudio.godiswithme.architecture.features.gallery.image
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
@@ -35,6 +35,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.istudio.godiswithme.navigation.GodImage
 import com.istudio.godiswithme.navigation.godImages
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -72,6 +73,9 @@ fun ImageGalleryScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainPane(modifier: Modifier = Modifier, onClick: (GodImage) -> Unit) {
+
+    val viewModel: ImageGalleryScreenViewModel = getViewModel()
+
     Scaffold(topBar = { TopAppBar(title = { Text(text = "God Images") }) }) {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 210.dp), // Set the minimum size for each cell

@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.features.gallery
+package com.istudio.godiswithme.architecture.features.gallery
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
