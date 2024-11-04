@@ -22,7 +22,7 @@ val appModule = module{
 
 val viewModule = module {
     viewModel { MainViewModel() }
-    viewModel { ImageGalleryScreenViewModel(get(),get()) }
+    viewModel { ImageGalleryScreenViewModel(get(),get(), get()) }
 }
 
 val loggerParentModule = module {

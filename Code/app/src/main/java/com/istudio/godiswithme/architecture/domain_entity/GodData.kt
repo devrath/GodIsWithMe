@@ -11,5 +11,5 @@ data class GodData(
     val language: String,
     @SerialName("language-code") val languageCode: String,
     val description: String,
-    @Transient var godImage: Bitmap? = null
+    @Transient var godImage: String? = null
 )

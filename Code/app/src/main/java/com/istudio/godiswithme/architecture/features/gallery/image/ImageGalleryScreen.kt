@@ -85,14 +85,18 @@ fun MainPane(modifier: Modifier = Modifier, onClick: (GodData) -> Unit) {
             items(viewModel.state.value) { godData ->
                 val bitmapImage = godData.godImage
                 if (bitmapImage != null) {
-                    Image(
-                        painter = BitmapPainter(bitmapImage.asImageBitmap()),
-                        contentDescription = godData.godName,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(2.dp)
-                        .clickable { onClick.invoke(godData) }
-                    )
+
+                    viewModel.loadBitmap(bitmapImage)?.asImageBitmap()?.let { bitmp ->
+                        Image(
+                            painter = BitmapPainter(bitmp),
+                            contentDescription = godData.godName,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(2.dp)
+                                .clickable { onClick.invoke(godData) }
+                        )
+                    }
+
                 }
             }
         }
@@ -105,6 +109,7 @@ fun SupportingPane(
     godData: GodData,
     onClick: (GodData) -> Unit
 ) {
+    val viewModel: ImageGalleryScreenViewModel = koinViewModel()
     Scaffold(floatingActionButton = {
         FloatingActionButton(onClick = { onClick.invoke(godData) }) {
             Icon(imageVector = Icons.Default.Info, contentDescription = null)
@@ -117,11 +122,14 @@ fun SupportingPane(
         ) {
             val bitmapImage = godData.godImage
             if (bitmapImage != null) {
-                Image(
-                    painter = BitmapPainter(bitmapImage.asImageBitmap()),
-                    contentDescription = "Click for more information",
-                    modifier = Modifier.fillMaxSize()
-                )
+                viewModel.loadBitmap(bitmapImage)?.asImageBitmap()?.let { bitmp ->
+                    Image(
+                        painter = BitmapPainter(bitmp),
+                        contentDescription = "Click for more information",
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+
             }
         }
     }
@@ -130,6 +138,7 @@ fun SupportingPane(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExtraPane(modifier: Modifier = Modifier, godData: GodData) {
+    val viewModel: ImageGalleryScreenViewModel = koinViewModel()
     Scaffold(topBar = { TopAppBar(title = { Text(text = "Details") }) }) {
         Column(
             modifier = Modifier
@@ -139,13 +148,17 @@ fun ExtraPane(modifier: Modifier = Modifier, godData: GodData) {
         ) {
             val bitmapImage = godData.godImage
             if (bitmapImage != null) {
-                Image(
-                    painter = BitmapPainter(bitmapImage.asImageBitmap()),
-                    contentDescription = godData.godName,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp)
-                )
+
+                viewModel.loadBitmap(bitmapImage)?.asImageBitmap()?.let { bitmp ->
+                    Image(
+                        painter = BitmapPainter(bitmp),
+                        contentDescription = godData.godName,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(300.dp)
+                    )
+                }
+
             }
 
 
