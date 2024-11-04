@@ -31,11 +31,14 @@ import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaf
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.istudio.godiswithme.navigation.GodImage
 import com.istudio.godiswithme.navigation.godImages
 import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -74,22 +77,25 @@ fun ImageGalleryScreen() {
 @Composable
 fun MainPane(modifier: Modifier = Modifier, onClick: (GodImage) -> Unit) {
 
-    val viewModel: ImageGalleryScreenViewModel = getViewModel()
+    val viewModel: ImageGalleryScreenViewModel = koinViewModel()
 
     Scaffold(topBar = { TopAppBar(title = { Text(text = "God Images") }) }) {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 210.dp), // Set the minimum size for each cell
             modifier = Modifier.padding(it)
         ) {
-            items(godImages) { godImage ->
-                Image(
-                    painter = painterResource(id = godImage.res),
-                    contentDescription = godImage.title,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(2.dp)
-                        .clickable { onClick.invoke(godImage) }
-                )
+            items(viewModel.state.value) { godImage ->
+                val bitmapImage = godImage.godImage
+                if (bitmapImage != null) {
+                    Image(
+                        painter = BitmapPainter(bitmapImage.asImageBitmap()), // Use BitmapPainter for Bitmap
+                        contentDescription = null, // Set contentDescription to null if not needed
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(2.dp)
+                        //.clickable { onClick.invoke(godImage) }
+                    )
+                }
             }
         }
     }
