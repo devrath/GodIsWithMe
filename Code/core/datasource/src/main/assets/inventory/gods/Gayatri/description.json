@@ -4,9 +4,10 @@
       "English",
       "Kannada",
       "Hindi"
-    ]
+    ],
+    "GodName": "Gayatri"
   },
-  "description": [
+  "data": [
     {
       "language": "English",
       "language-code": "en",

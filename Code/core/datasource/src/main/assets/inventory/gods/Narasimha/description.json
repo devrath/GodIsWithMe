@@ -4,9 +4,10 @@
       "English",
       "Kannada",
       "Hindi"
-    ]
+    ],
+    "GodName": "Narasimha"
   },
-  "description": [
+  "data": [
     {
       "language": "English",
       "language-code": "en",

@@ -4,9 +4,10 @@
       "English",
       "Kannada",
       "Hindi"
-    ]
+    ],
+    "GodName": "Parvati"
   },
-  "description": [
+  "data": [
     {
       "language": "English",
       "language-code": "en",
