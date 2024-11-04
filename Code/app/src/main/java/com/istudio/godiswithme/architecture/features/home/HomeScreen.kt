@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.window.core.layout.WindowWidthSizeClass
 import com.istudio.godiswithme.R
-import com.istudio.godiswithme.architecture.features.gallery.ListDetailsScaffold
+import com.istudio.godiswithme.architecture.features.gallery.audio.AudioGalleryScreen
 import com.istudio.godiswithme.architecture.features.gallery.image.ImageGalleryScreen
 
 @Composable
@@ -46,7 +46,7 @@ fun HomeScreen(navController: NavHostController) {
     {
         when (selected.value) {
             HomeDest.IMAGE_GALLERY.name -> ImageGalleryScreen()
-            HomeDest.AUDIO_GALLERY.name -> ListDetailsScaffold()
+            HomeDest.AUDIO_GALLERY.name -> AudioGalleryScreen()
         }
     }
 }
