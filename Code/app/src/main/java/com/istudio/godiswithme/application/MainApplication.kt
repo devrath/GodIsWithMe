@@ -12,6 +12,8 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.GlobalContext.startKoin
 
+
+const val MY_APPLICATON_LOGS = "myApplicationLogs"
 class MainApplication : Application(), KoinComponent {
 
     companion object {

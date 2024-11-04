@@ -2,6 +2,7 @@ package com.istudio.godiswithme.architecture.domain
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import com.istudio.godiswithme.application.MY_APPLICATON_LOGS
 import com.istudio.godiswithme.architecture.domain_entity.DescriptionData
 import com.istudio.godiswithme.architecture.domain_entity.GodData
 import com.istudio.godiswithme.common.managers.AssetManager
@@ -19,37 +20,42 @@ class GetGodsListUseCase @Inject constructor(
     private val logger: Logger
 ) : UseCaseFlow<List<GodData>> {
 
+    companion object {
+        const val ROOT_LOCATION = "inventory/gods"
+        const val COVER_IMAGE_LOCATION = "cover/image.png"
+        const val GOD_DESCRIPTION_LOCATION = "description.json"
+    }
+
     override fun invoke(): Flow<List<GodData>> = flow {
+        // Collection to show in the grid of gods
         val listOfGods = mutableListOf<GodData>()
-
-        assetManager.provide()?.let { providedAssetManager ->
-            try {
-                val godFolders = providedAssetManager.list("inventory/gods").orEmpty()
-                godFolders.forEach { godFolder ->
-                    val coverImagePath = "inventory/gods/$godFolder/cover/image.png"
-                    val descriptionPath = "inventory/gods/$godFolder/description.json"
-
-                    val godImageBitmap = loadBitmap(assetManager, coverImagePath)
-                    val descriptionData = loadDescriptionData(assetManager, descriptionPath)
-
-                    descriptionData?.let {
-                        val englishData = it.data.firstOrNull { langData -> langData.languageCode == "en" }
-                        val wrappedData = GodData(
-                            godName = it.metaData.godName,
-                            languageCode = englishData?.languageCode.orEmpty(),
-                            language = englishData?.language.orEmpty(),
-                            description = englishData?.description.orEmpty(),
-                            godImage = godImageBitmap
-                        )
-                        listOfGods.add(wrappedData)
-                    }
-                }
-            } catch (e: IOException) {
-                logger.e("FETCH-JSON-DATA",e.message.toString(),e)
+        try {
+            // Get list of folders
+            val godFolders = assetManager.provide()?.list(ROOT_LOCATION).orEmpty()
+            for (godFolder in godFolders) {
+                loadGodData(assetManager, godFolder)?.let { listOfGods.add(it) }
             }
+        } catch (e: IOException) {
+            logger.e(MY_APPLICATON_LOGS,e.message.orEmpty(),e)
         }
-
         emit(listOfGods)
+    }
+
+    private fun loadGodData(providedAssetManager: AssetManager, godFolder: String): GodData? {
+        val coverImagePath =  ROOT_LOCATION.plus("/").plus(godFolder).plus("/").plus(COVER_IMAGE_LOCATION)
+        val descriptionPath = ROOT_LOCATION.plus("/").plus(godFolder).plus("/").plus(GOD_DESCRIPTION_LOCATION)
+
+        val godImageBitmap = loadBitmap(providedAssetManager, coverImagePath)
+        val descriptionData = loadDescriptionData(providedAssetManager, descriptionPath) ?: return null
+
+        val englishData = descriptionData.data.firstOrNull { it.languageCode == "en" }
+        return GodData(
+            godName = descriptionData.metaData.godName,
+            languageCode = englishData?.languageCode.orEmpty(),
+            language = englishData?.language.orEmpty(),
+            description = englishData?.description.orEmpty(),
+            godImage = godImageBitmap
+        )
     }
 
     private fun loadBitmap(assetManager: AssetManager, path: String): Bitmap? {
@@ -59,7 +65,7 @@ class GetGodsListUseCase @Inject constructor(
                 inputStream?.close()
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            logger.e(MY_APPLICATON_LOGS,e.message.orEmpty(),e)
             null
         }
     }
@@ -72,7 +78,8 @@ class GetGodsListUseCase @Inject constructor(
                 Json.decodeFromString(reader.readText())
             }
         } catch (e: IOException) {
-            logger.e("FETCH-JSON-DATA",e.message.toString(),e)
+            logger.e(MY_APPLICATON_LOGS,e.message.orEmpty(),e)
             null
         }
 }
+
