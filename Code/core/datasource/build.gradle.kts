@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.istudio.godiswithme.core.network"
+    namespace = "com.istudio.godiswithme.core.datasource"
     compileSdk = rootProject.extra["compileSdkVersion"] as Int
 
     defaultConfig {

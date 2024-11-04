@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.core.database
+package com.istudio.godiswithme.core.datasource
 
 import org.junit.Test
 
