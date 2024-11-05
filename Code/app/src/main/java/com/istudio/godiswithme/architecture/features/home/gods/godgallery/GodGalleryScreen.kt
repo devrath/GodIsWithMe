@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ImageGalleryMainPane(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
+fun GodGalleryScreen(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
     val viewModel: GodGalleryVm = koinViewModel()
     val (uiState, onAction, sideEffect) = viewModel.unpack()
     CurrentScreen(uiState, sideEffect, onAction, onClick)

@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.features.home.gods.goddetails
+package com.istudio.godiswithme.architecture.features.home.gods.godSongs
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -28,8 +28,8 @@ import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun GodDetailsScreen(modifier: Modifier = Modifier, godName: String) {
-    val viewModel: GodDetailsVm = koinViewModel()
+fun GodSongsScreen(modifier: Modifier = Modifier, godName: String) {
+    val viewModel: GodSongsVm = koinViewModel()
     val (uiState, onAction, sideEffect) = viewModel.unpack()
     CurrentScreen(uiState, sideEffect, onAction, godName)
 }
