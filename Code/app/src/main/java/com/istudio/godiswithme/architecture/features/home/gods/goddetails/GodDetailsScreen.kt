@@ -45,7 +45,7 @@ private fun CurrentScreen(
 
     LaunchedEffect(Unit) { onAction(UiAction.LoadScreen(godName)) }
 
-    Scaffold(topBar = { TopAppBar(title = { Text(text = "Details") }) }) {
+    Scaffold(topBar = { TopAppBar(title = { Text(text = godName) }) }) {
         Column(
             modifier = Modifier
                 .padding(it)
@@ -65,12 +65,6 @@ private fun CurrentScreen(
                         .height(300.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = name,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(horizontal = 12.dp)
-            )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = godDescription,
