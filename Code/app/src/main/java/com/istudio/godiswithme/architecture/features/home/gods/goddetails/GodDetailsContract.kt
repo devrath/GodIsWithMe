@@ -1,6 +1,6 @@
 package com.istudio.godiswithme.architecture.features.home.gods.goddetails
 
-import com.istudio.godiswithme.architecture.domain_entity.GodData
+import com.istudio.godiswithme.architecture.domain.models.GodData
 
 interface GodDetailsContract {
     data class UiState(

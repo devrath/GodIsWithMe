@@ -1,7 +1,7 @@
 package com.istudio.godiswithme.architecture.features.home.gods.godgallery
 
 import android.graphics.Bitmap
-import com.istudio.godiswithme.architecture.domain_entity.GodData
+import com.istudio.godiswithme.architecture.domain.models.GodData
 
 interface GodGalleryScreenContract {
     data class UiState(

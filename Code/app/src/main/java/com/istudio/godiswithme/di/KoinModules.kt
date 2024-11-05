@@ -1,7 +1,9 @@
 package com.istudio.godiswithme.di
 
-import com.istudio.godiswithme.architecture.domain.GetGodByNameUseCase
-import com.istudio.godiswithme.architecture.domain.GetGodsListUseCase
+import com.istudio.godiswithme.architecture.data.repositoryimpl.GodRepositoryImpl
+import com.istudio.godiswithme.architecture.domain.repository.GodRepository
+import com.istudio.godiswithme.architecture.domain.usecases.GetGodByNameUseCase
+import com.istudio.godiswithme.architecture.domain.usecases.GetGodsListUseCase
 import com.istudio.godiswithme.architecture.features.home.gods.goddetails.GodDetailsVm
 import com.istudio.godiswithme.core.logger.di.crashlyticsLoggerModule
 import com.istudio.godiswithme.core.logger.di.firebaseModule
@@ -18,8 +20,10 @@ import org.koin.dsl.module
 
 val appModule = module{
     single { AssetManager(get()) }
-    single { GetGodsListUseCase(get(), get()) }
-    single { GetGodByNameUseCase(get(), get()) }
+    single { GetGodsListUseCase(get()) }
+    single { GetGodByNameUseCase(get()) }
+    single<GodRepository> { GodRepositoryImpl(get(),get()) }
+
 }
 
 val viewModule = module {

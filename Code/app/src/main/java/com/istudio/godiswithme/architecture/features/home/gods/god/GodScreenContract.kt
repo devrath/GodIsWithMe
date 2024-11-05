@@ -1,6 +1,6 @@
 package com.istudio.godiswithme.architecture.features.home.gods.god
 
-import com.istudio.godiswithme.architecture.domain_entity.GodData
+import com.istudio.godiswithme.architecture.domain.models.GodData
 
 interface GodScreenContract {
     data class UiState(

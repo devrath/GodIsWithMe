@@ -2,7 +2,7 @@ package com.istudio.godiswithme.architecture.features.home.gods.godgallery
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.istudio.godiswithme.architecture.domain.GetGodsListUseCase
+import com.istudio.godiswithme.architecture.domain.usecases.GetGodsListUseCase
 import com.istudio.godiswithme.common.mvi.MVI
 import com.istudio.godiswithme.common.mvi.mvi
 import com.istudio.godiswithme.core.logger.applogger.local.Logger
