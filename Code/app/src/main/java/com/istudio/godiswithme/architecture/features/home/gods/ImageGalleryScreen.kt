@@ -16,7 +16,6 @@ import com.istudio.godiswithme.architecture.features.home.gods.god.ImageGalleryS
 @Composable
 fun ImageGalleryScreen() {
     val navigator = rememberSupportingPaneScaffoldNavigator<String>()
-    val currentSupportingPane = remember { mutableStateOf<String?>(null) }
 
     BackHandler(navigator.canNavigateBack()) {
         navigator.navigateBack()
@@ -28,16 +27,14 @@ fun ImageGalleryScreen() {
         mainPane = {
             ImageGalleryMainPane { newGodName ->
                 // Update the `supportingPane` only if the name changes
-                if (currentSupportingPane.value != newGodName) {
-                    currentSupportingPane.value = newGodName
-                    navigator.navigateTo(ThreePaneScaffoldRole.Secondary, newGodName)
-                }
+                navigator.navigateTo(ThreePaneScaffoldRole.Secondary, newGodName)
             }
         },
         supportingPane = {
-            currentSupportingPane.value?.let { godName ->
-                ImageGallerySupportingPane(godName = godName) {
-                    navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, godName)
+
+            navigator.currentDestination?.content?.let { it ->
+                ImageGallerySupportingPane(godName = it) {
+                    navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, it)
                 }
             }
         },
