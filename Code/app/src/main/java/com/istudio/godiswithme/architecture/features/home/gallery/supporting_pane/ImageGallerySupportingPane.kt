@@ -44,7 +44,7 @@ private fun CurrentScreen(
     onClick: (String) -> Unit,
 ) {
 
-    LaunchedEffect(Unit) { onAction(UiAction.LoadScreen(godName)) }
+    LaunchedEffect(godName) { onAction(UiAction.LoadScreen(godName)) }
 
     Scaffold(floatingActionButton = {
        Row {

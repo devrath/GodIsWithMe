@@ -6,6 +6,8 @@ import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.istudio.godiswithme.architecture.features.home.gallery.extra_pane.ImageGalleryExtraPane
 import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPane
 import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPane
@@ -14,6 +16,7 @@ import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pan
 @Composable
 fun ImageGalleryScreen() {
     val navigator = rememberSupportingPaneScaffoldNavigator<String>()
+    val currentSupportingPane = remember { mutableStateOf<String?>(null) }
 
     BackHandler(navigator.canNavigateBack()) {
         navigator.navigateBack()
@@ -23,22 +26,25 @@ fun ImageGalleryScreen() {
         directive = navigator.scaffoldDirective,
         value = navigator.scaffoldValue,
         mainPane = {
-            ImageGalleryMainPane {
-                navigator.navigateTo(ThreePaneScaffoldRole.Secondary, it)
+            ImageGalleryMainPane { newGodName ->
+                // Update the `supportingPane` only if the name changes
+                if (currentSupportingPane.value != newGodName) {
+                    currentSupportingPane.value = newGodName
+                    navigator.navigateTo(ThreePaneScaffoldRole.Secondary, newGodName)
+                }
             }
         },
         supportingPane = {
-            navigator.currentDestination?.content?.let { it ->
-                ImageGallerySupportingPane(godName = it) {
-                    navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, it)
+            currentSupportingPane.value?.let { godName ->
+                ImageGallerySupportingPane(godName = godName) {
+                    navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, godName)
                 }
             }
         },
         extraPane = {
-            navigator.currentDestination?.content?.let {
-                ImageGalleryExtraPane(godName = it)
+            navigator.currentDestination?.content?.let { godName ->
+                ImageGalleryExtraPane(godName = godName)
             }
         }
     )
-
 }
