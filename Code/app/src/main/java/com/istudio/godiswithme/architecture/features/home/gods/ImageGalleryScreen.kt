@@ -8,12 +8,13 @@ import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaf
 import androidx.compose.runtime.Composable
 import com.istudio.godiswithme.architecture.features.home.gods.goddetails.GodDetailsScreen
 import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryScreen
-import com.istudio.godiswithme.architecture.features.home.gods.god.ImageGallerySupportingPane
+import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreen
+import com.istudio.godiswithme.architecture.features.home.gods.godSongs.GodSongsScreen
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun ImageGalleryScreen() {
-    val navigator = rememberSupportingPaneScaffoldNavigator<String>()
+    val navigator = rememberSupportingPaneScaffoldNavigator<GodDestination>()
 
     BackHandler(navigator.canNavigateBack()) {
         navigator.navigateBack()
@@ -24,22 +25,34 @@ fun ImageGalleryScreen() {
         value = navigator.scaffoldValue,
         mainPane = {
             GodGalleryScreen { newGodName ->
-                // Update the `supportingPane` only if the name changes
-                navigator.navigateTo(ThreePaneScaffoldRole.Secondary, newGodName)
+                navigator.navigateTo(ThreePaneScaffoldRole.Secondary, GodDestination.GodDetails(newGodName))
             }
         },
         supportingPane = {
-
-            navigator.currentDestination?.content?.let { it ->
-                ImageGallerySupportingPane(godName = it) {
-                    navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, it)
-                }
+            navigator.currentDestination?.content?.let { godDestination ->
+                GodScreen(
+                    godName = godDestination.godName,
+                    descriptionOnClick = {
+                        navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, GodDestination.GodDetails(godDestination.godName))
+                    },
+                    songsOnClick = {
+                        navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, GodDestination.GodDetailsSongs(godDestination.godName))
+                    }
+                )
             }
         },
         extraPane = {
-            navigator.currentDestination?.content?.let { godName ->
-                GodDetailsScreen(godName = godName)
+            navigator.currentDestination?.content?.let { godDestination ->
+                when (godDestination) {
+                    is GodDestination.GodDetails -> GodDetailsScreen(godName = godDestination.godName)
+                    is GodDestination.GodDetailsSongs -> GodSongsScreen(godName = godDestination.godName)
+                }
             }
         }
     )
+}
+
+private sealed class GodDestination(val godName: String) {
+    data class GodDetails(val name: String) : GodDestination(name)
+    data class GodDetailsSongs(val name: String) : GodDestination(name)
 }

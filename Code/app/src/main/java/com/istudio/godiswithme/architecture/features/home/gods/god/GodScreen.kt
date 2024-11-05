@@ -25,14 +25,15 @@ import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ImageGallerySupportingPane(
+fun GodScreen(
     modifier: Modifier = Modifier,
     godName: String,
-    onClick: (String) -> Unit
+    descriptionOnClick: (String) -> Unit,
+    songsOnClick: (String) -> Unit
 ) {
     val viewModel: GodScreenVm = koinViewModel()
     val (uiState, onAction, sideEffect) = viewModel.unpack()
-    CurrentScreen(uiState, sideEffect, godName, onAction, onClick)
+    CurrentScreen(uiState, sideEffect, godName, onAction, descriptionOnClick, songsOnClick)
 }
 
 @Composable
@@ -41,7 +42,8 @@ private fun CurrentScreen(
     sideEffect: Flow<SideEffect>,
     godName: String,
     onAction: (UiAction) -> Unit,
-    onClick: (String) -> Unit,
+    descriptionOnClick: (String) -> Unit,
+    songsOnClick: (String) -> Unit,
 ) {
 
     LaunchedEffect(godName) { onAction(UiAction.LoadScreen(godName)) }
@@ -49,12 +51,12 @@ private fun CurrentScreen(
     Scaffold(floatingActionButton = {
        Row {
            FloatingActionButton(onClick = {
-               onClick.invoke(uiState.godData?.godName.orEmpty())
+               songsOnClick.invoke(uiState.godData?.godName.orEmpty())
            }) {
                Icon(imageVector = Icons.Default.MusicNote, contentDescription = "Songs")
            }
            FloatingActionButton(onClick = {
-               onClick.invoke(uiState.godData?.godName.orEmpty())
+               descriptionOnClick.invoke(uiState.godData?.godName.orEmpty())
            }) {
                Icon(imageVector = Icons.Default.Info, contentDescription = "Description")
            }
