@@ -1,7 +1,6 @@
-package com.istudio.godiswithme.architecture.features.home.gallery.extra_pane
+package com.istudio.godiswithme.architecture.features.home.gods.goddetails
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,33 +9,27 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.unit.dp
-import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneVm
-import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.SideEffect
-import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.UiAction
-import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.UiState
+import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenContract.SideEffect
+import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenContract.UiAction
+import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenContract.UiState
 import com.istudio.godiswithme.common.mvi.unpack
 import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ImageGalleryExtraPane(modifier: Modifier = Modifier, godName: String) {
-    val viewModel: ImageGalleryExtraPaneVm = koinViewModel()
+    val viewModel: GodDetailsVm = koinViewModel()
     val (uiState, onAction, sideEffect) = viewModel.unpack()
     CurrentScreen(uiState, sideEffect, onAction, godName)
 }

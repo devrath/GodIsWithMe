@@ -1,9 +1,9 @@
-package com.istudio.godiswithme.architecture.features.home.gallery.main_pane
+package com.istudio.godiswithme.architecture.features.home.gods.godgallery
 
 import android.graphics.Bitmap
 import com.istudio.godiswithme.architecture.domain_entity.GodData
 
-interface ImageGalleryMainPaneContract {
+interface GodGalleryScreenContract {
     data class UiState(
         val isLoading: Boolean = true,
         val listOfGods: List<GodData> = emptyList(),

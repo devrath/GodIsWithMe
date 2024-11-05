@@ -1,8 +1,8 @@
-package com.istudio.godiswithme.architecture.features.home.gallery.extra_pane
+package com.istudio.godiswithme.architecture.features.home.gods.goddetails
 
 import com.istudio.godiswithme.architecture.domain_entity.GodData
 
-interface ImageGalleryExtraPaneContract {
+interface GodDetailsContract {
     data class UiState(
         val isLoading: Boolean = true,
         val godData: GodData? = null,

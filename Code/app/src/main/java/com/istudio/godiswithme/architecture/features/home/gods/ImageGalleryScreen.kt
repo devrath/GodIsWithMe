@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.features.home.gallery
+package com.istudio.godiswithme.architecture.features.home.gods
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -8,9 +8,9 @@ import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.istudio.godiswithme.architecture.features.home.gallery.extra_pane.ImageGalleryExtraPane
-import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPane
-import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPane
+import com.istudio.godiswithme.architecture.features.home.gods.goddetails.ImageGalleryExtraPane
+import com.istudio.godiswithme.architecture.features.home.gods.godgallery.ImageGalleryMainPane
+import com.istudio.godiswithme.architecture.features.home.gods.god.ImageGallerySupportingPane
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable

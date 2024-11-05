@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.features.home.gallery.main_pane
+package com.istudio.godiswithme.architecture.features.home.gods.godgallery
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -18,10 +18,9 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.istudio.godiswithme.architecture.domain_entity.GodData
-import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.SideEffect
-import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.UiAction
-import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.UiState
+import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryScreenContract.SideEffect
+import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryScreenContract.UiAction
+import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryScreenContract.UiState
 import com.istudio.godiswithme.common.mvi.CollectSideEffect
 import com.istudio.godiswithme.common.mvi.unpack
 import kotlinx.coroutines.flow.Flow
@@ -29,7 +28,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ImageGalleryMainPane(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
-    val viewModel: ImageGalleryMainPaneVm = koinViewModel()
+    val viewModel: GodGalleryVm = koinViewModel()
     val (uiState, onAction, sideEffect) = viewModel.unpack()
     CurrentScreen(uiState, sideEffect, onAction, onClick)
 }

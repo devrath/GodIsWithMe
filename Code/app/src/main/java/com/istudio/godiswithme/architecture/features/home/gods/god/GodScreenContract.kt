@@ -1,8 +1,8 @@
-package com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane
+package com.istudio.godiswithme.architecture.features.home.gods.god
 
 import com.istudio.godiswithme.architecture.domain_entity.GodData
 
-interface ImageGallerySupportingPaneContract {
+interface GodScreenContract {
     data class UiState(
         val isLoading: Boolean = true,
         val godData: GodData? = null,

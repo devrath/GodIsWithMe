@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane
+package com.istudio.godiswithme.architecture.features.home.gods.god
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -17,9 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
-import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.SideEffect
-import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.UiAction
-import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.UiState
+import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenContract.SideEffect
+import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenContract.UiAction
+import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenContract.UiState
 import com.istudio.godiswithme.common.mvi.unpack
 import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel
@@ -30,7 +30,7 @@ fun ImageGallerySupportingPane(
     godName: String,
     onClick: (String) -> Unit
 ) {
-    val viewModel: ImageGallerySupportingPaneVm = koinViewModel()
+    val viewModel: GodScreenVm = koinViewModel()
     val (uiState, onAction, sideEffect) = viewModel.unpack()
     CurrentScreen(uiState, sideEffect, godName, onAction, onClick)
 }

@@ -1,24 +1,17 @@
-package com.istudio.godiswithme.architecture.features.home.gallery.main_pane
+package com.istudio.godiswithme.architecture.features.home.gods.godgallery
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.istudio.godiswithme.application.MY_APPLICATON_LOGS
 import com.istudio.godiswithme.architecture.domain.GetGodsListUseCase
-import com.istudio.godiswithme.architecture.domain_entity.GodData
-import com.istudio.godiswithme.common.managers.AssetManager
 import com.istudio.godiswithme.common.mvi.MVI
 import com.istudio.godiswithme.common.mvi.mvi
 import com.istudio.godiswithme.core.logger.applogger.local.Logger
-import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.SideEffect
-import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.UiAction
-import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.UiState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryScreenContract.SideEffect
+import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryScreenContract.UiAction
+import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryScreenContract.UiState
 import kotlinx.coroutines.launch
 
-class ImageGalleryMainPaneVm(
+class GodGalleryVm(
     private val getGodsListUseCase: GetGodsListUseCase,
     private val logger: Logger
 ) : ViewModel() , MVI<UiState, UiAction, SideEffect> by mvi(initialUiState()) {

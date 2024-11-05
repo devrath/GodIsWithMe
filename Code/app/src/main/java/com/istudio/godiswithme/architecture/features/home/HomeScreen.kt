@@ -19,7 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.window.core.layout.WindowWidthSizeClass
 import com.istudio.godiswithme.R
 import com.istudio.godiswithme.architecture.features.home.settings.Settings
-import com.istudio.godiswithme.architecture.features.home.gallery.ImageGalleryScreen
+import com.istudio.godiswithme.architecture.features.home.gods.ImageGalleryScreen
 
 @Composable
 fun HomeScreen(navController: NavHostController) {

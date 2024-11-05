@@ -2,15 +2,15 @@ package com.istudio.godiswithme.di
 
 import com.istudio.godiswithme.architecture.domain.GetGodByNameUseCase
 import com.istudio.godiswithme.architecture.domain.GetGodsListUseCase
-import com.istudio.godiswithme.architecture.features.home.gallery.extra_pane.ImageGalleryExtraPaneVm
+import com.istudio.godiswithme.architecture.features.home.gods.goddetails.GodDetailsVm
 import com.istudio.godiswithme.core.logger.di.crashlyticsLoggerModule
 import com.istudio.godiswithme.core.logger.di.firebaseModule
 import com.istudio.godiswithme.core.logger.di.loggerModule
 import com.istudio.godiswithme.core.logger.di.timberDebugModule
 import com.istudio.godiswithme.core.logger.di.timberInitializationModule
 import com.istudio.godiswithme.core.logger.di.timberReleaseModule
-import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneVm
-import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneVm
+import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryVm
+import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenVm
 import com.istudio.godiswithme.common.managers.AssetManager
 import com.istudio.godiswithme.main.MainVm
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -24,9 +24,9 @@ val appModule = module{
 
 val viewModule = module {
     viewModel { MainVm() }
-    viewModel { ImageGalleryMainPaneVm(get(),get()) }
-    viewModel { ImageGallerySupportingPaneVm(get(),get()) }
-    viewModel { ImageGalleryExtraPaneVm(get(),get()) }
+    viewModel { GodGalleryVm(get(),get()) }
+    viewModel { GodScreenVm(get(),get()) }
+    viewModel { GodDetailsVm(get(),get()) }
 }
 
 val loggerParentModule = module {
