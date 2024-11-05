@@ -7,8 +7,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -36,11 +38,7 @@ fun HomeScreen(navController: NavHostController) {
         layoutType = layoutType,
         navigationSuiteItems = {
             HomeDest.entries.forEach {
-                item(selected = selected.value == it.name,
-                    icon = { Icon(imageVector = it.imageVector, contentDescription = null) },
-                    label = { Text(text = stringResource(id = it.resId)) }, onClick = {
-                        selected.value = it.name
-                    })
+                navigationSuiteItem(selected, it)
             }
         })
     {
@@ -51,7 +49,19 @@ fun HomeScreen(navController: NavHostController) {
     }
 }
 
-enum class HomeDest(val resId:Int, val imageVector: ImageVector) {
+
+private fun NavigationSuiteScope.navigationSuiteItem(
+    selected: MutableState<String>,
+    it: HomeDest
+) {
+    item(selected = selected.value == it.name,
+        icon = { Icon(imageVector = it.imageVector, contentDescription = it.name) },
+        label = { Text(text = stringResource(id = it.resId)) },
+        onClick = { selected.value = it.name }
+    )
+}
+
+private enum class HomeDest(val resId:Int, val imageVector: ImageVector) {
     IMAGE_GALLERY(R.string.images, imageVector = Icons.Default.Image),
     AUDIO_GALLERY(R.string.audio, imageVector = Icons.Default.MusicNote),
 }

@@ -2,7 +2,6 @@ package com.istudio.godiswithme.architecture.features.gallery.image
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,9 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -33,9 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.istudio.godiswithme.architecture.domain_entity.GodData
+import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPane
+import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneVm
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
@@ -51,7 +48,7 @@ fun ImageGalleryScreen() {
         directive = navigator.scaffoldDirective,
         value = navigator.scaffoldValue,
         mainPane = {
-            MainPane {
+            ImageGalleryMainPane {
                 navigator.navigateTo(ThreePaneScaffoldRole.Secondary, it)
             }
         },
@@ -74,33 +71,6 @@ fun ImageGalleryScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainPane(modifier: Modifier = Modifier, onClick: (GodData) -> Unit) {
-
-    val viewModel: ImageGalleryScreenViewModel = koinViewModel()
-
-    Scaffold(topBar = { TopAppBar(title = { Text(text = "God Images") }) }) {
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 210.dp), // Set the minimum size for each cell
-            modifier = Modifier.padding(it)
-        ) {
-            items(viewModel.state.value) { godData ->
-                val bitmapImage = godData.godImage
-                if (bitmapImage != null) {
-
-                    viewModel.loadBitmap(bitmapImage)?.asImageBitmap()?.let { bitmp ->
-                        Image(
-                            painter = BitmapPainter(bitmp),
-                            contentDescription = godData.godName,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(2.dp)
-                                .clickable { onClick.invoke(godData) }
-                        )
-                    }
-
-                }
-            }
-        }
-    }
 }
 
 @Composable
@@ -109,7 +79,7 @@ fun SupportingPane(
     godData: GodData,
     onClick: (GodData) -> Unit
 ) {
-    val viewModel: ImageGalleryScreenViewModel = koinViewModel()
+    val viewModel: ImageGalleryMainPaneVm = koinViewModel()
     Scaffold(floatingActionButton = {
         FloatingActionButton(onClick = { onClick.invoke(godData) }) {
             Icon(imageVector = Icons.Default.Info, contentDescription = null)
@@ -138,7 +108,7 @@ fun SupportingPane(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExtraPane(modifier: Modifier = Modifier, godData: GodData) {
-    val viewModel: ImageGalleryScreenViewModel = koinViewModel()
+    val viewModel: ImageGalleryMainPaneVm = koinViewModel()
     Scaffold(topBar = { TopAppBar(title = { Text(text = "Details") }) }) {
         Column(
             modifier = Modifier

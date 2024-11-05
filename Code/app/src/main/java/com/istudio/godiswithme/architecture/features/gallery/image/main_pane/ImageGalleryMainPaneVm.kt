@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.features.gallery.image
+package com.istudio.godiswithme.architecture.features.gallery.image.main_pane
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -9,12 +9,11 @@ import com.istudio.godiswithme.architecture.domain.GetGodsListUseCase
 import com.istudio.godiswithme.architecture.domain_entity.GodData
 import com.istudio.godiswithme.common.managers.AssetManager
 import com.istudio.godiswithme.core.logger.applogger.local.Logger
-import com.istudio.godiswithme.navigation.GodImage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ImageGalleryScreenViewModel(
+class ImageGalleryMainPaneVm(
     private val getGodsListUseCase: GetGodsListUseCase,
     private val assetManager: AssetManager,
     private val logger: Logger
