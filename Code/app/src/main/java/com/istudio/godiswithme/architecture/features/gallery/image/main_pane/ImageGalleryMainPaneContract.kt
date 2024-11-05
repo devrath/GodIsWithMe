@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import com.istudio.godiswithme.architecture.domain_entity.GodData
 
 interface ImageGalleryMainPaneContract {
-    //data class UiState(val count: Int)
     data class UiState(
         val isLoading: Boolean = true,
         val listOfGods: List<GodData> = emptyList(),

@@ -2,6 +2,7 @@ package com.istudio.godiswithme.di
 
 import com.istudio.godiswithme.architecture.domain.GetGodByNameUseCase
 import com.istudio.godiswithme.architecture.domain.GetGodsListUseCase
+import com.istudio.godiswithme.architecture.features.gallery.image.extra_pane.ImageGalleryExtraPaneVm
 import com.istudio.godiswithme.core.logger.di.crashlyticsLoggerModule
 import com.istudio.godiswithme.core.logger.di.firebaseModule
 import com.istudio.godiswithme.core.logger.di.loggerModule
@@ -25,6 +26,7 @@ val viewModule = module {
     viewModel { MainVm() }
     viewModel { ImageGalleryMainPaneVm(get(),get()) }
     viewModel { ImageGallerySupportingPaneVm(get(),get()) }
+    viewModel { ImageGalleryExtraPaneVm(get(),get()) }
 }
 
 val loggerParentModule = module {
