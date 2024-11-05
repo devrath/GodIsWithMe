@@ -2,10 +2,12 @@ package com.istudio.godiswithme.architecture.features.home.gallery.supporting_pa
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -45,11 +47,18 @@ private fun CurrentScreen(
     LaunchedEffect(Unit) { onAction(UiAction.LoadScreen(godName)) }
 
     Scaffold(floatingActionButton = {
-        FloatingActionButton(onClick = {
-            onClick.invoke(uiState.godData?.godName.orEmpty())
-        }) {
-            Icon(imageVector = Icons.Default.Info, contentDescription = null)
-        }
+       Row {
+           FloatingActionButton(onClick = {
+               onClick.invoke(uiState.godData?.godName.orEmpty())
+           }) {
+               Icon(imageVector = Icons.Default.MusicNote, contentDescription = "Songs")
+           }
+           FloatingActionButton(onClick = {
+               onClick.invoke(uiState.godData?.godName.orEmpty())
+           }) {
+               Icon(imageVector = Icons.Default.Info, contentDescription = "Description")
+           }
+       }
     }) {
         Box(
             modifier = Modifier
