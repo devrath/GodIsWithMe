@@ -29,14 +29,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
+private fun MainScreen(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     SetupNavGraph(navController = navController)
 }
 
 @WindowSizeClassPreviews
 @Composable
-fun GreetingPreview() {
+private fun MainScreenPreview() {
     GodIsWithMeTheme {
         MainScreen()
     }
