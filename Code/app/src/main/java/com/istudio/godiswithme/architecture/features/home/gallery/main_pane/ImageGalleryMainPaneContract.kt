@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.features.gallery.image.main_pane
+package com.istudio.godiswithme.architecture.features.home.gallery.main_pane
 
 import android.graphics.Bitmap
 import com.istudio.godiswithme.architecture.domain_entity.GodData

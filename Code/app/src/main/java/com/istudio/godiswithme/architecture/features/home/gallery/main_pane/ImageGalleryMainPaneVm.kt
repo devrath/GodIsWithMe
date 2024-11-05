@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.features.gallery.image.main_pane
+package com.istudio.godiswithme.architecture.features.home.gallery.main_pane
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -11,9 +11,9 @@ import com.istudio.godiswithme.common.managers.AssetManager
 import com.istudio.godiswithme.common.mvi.MVI
 import com.istudio.godiswithme.common.mvi.mvi
 import com.istudio.godiswithme.core.logger.applogger.local.Logger
-import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneContract.SideEffect
-import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneContract.UiAction
-import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneContract.UiState
+import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.SideEffect
+import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.UiAction
+import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

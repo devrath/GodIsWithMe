@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.features.gallery.image.supporting_pane
+package com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane
 
 import com.istudio.godiswithme.architecture.domain_entity.GodData
 

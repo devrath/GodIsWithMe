@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.features.gallery.image.extra_pane
+package com.istudio.godiswithme.architecture.features.home.gallery.extra_pane
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -26,10 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.unit.dp
-import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneVm
-import com.istudio.godiswithme.architecture.features.gallery.image.supporting_pane.ImageGallerySupportingPaneContract.SideEffect
-import com.istudio.godiswithme.architecture.features.gallery.image.supporting_pane.ImageGallerySupportingPaneContract.UiAction
-import com.istudio.godiswithme.architecture.features.gallery.image.supporting_pane.ImageGallerySupportingPaneContract.UiState
+import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneVm
+import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.SideEffect
+import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.UiAction
+import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.UiState
 import com.istudio.godiswithme.common.mvi.unpack
 import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel

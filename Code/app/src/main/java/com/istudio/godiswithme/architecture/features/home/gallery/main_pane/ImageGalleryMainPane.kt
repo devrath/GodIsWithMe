@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.features.gallery.image.main_pane
+package com.istudio.godiswithme.architecture.features.home.gallery.main_pane
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -19,9 +19,9 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.istudio.godiswithme.architecture.domain_entity.GodData
-import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneContract.SideEffect
-import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneContract.UiAction
-import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneContract.UiState
+import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.SideEffect
+import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.UiAction
+import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPaneContract.UiState
 import com.istudio.godiswithme.common.mvi.CollectSideEffect
 import com.istudio.godiswithme.common.mvi.unpack
 import kotlinx.coroutines.flow.Flow

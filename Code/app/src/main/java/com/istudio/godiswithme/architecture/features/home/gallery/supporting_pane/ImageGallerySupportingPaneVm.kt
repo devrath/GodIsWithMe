@@ -1,12 +1,12 @@
-package com.istudio.godiswithme.architecture.features.gallery.image.supporting_pane
+package com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.istudio.godiswithme.architecture.domain.GetGodByNameUseCase
 import com.istudio.godiswithme.architecture.domain.GetGodsListUseCase
-import com.istudio.godiswithme.architecture.features.gallery.image.supporting_pane.ImageGallerySupportingPaneContract.SideEffect
-import com.istudio.godiswithme.architecture.features.gallery.image.supporting_pane.ImageGallerySupportingPaneContract.UiAction
-import com.istudio.godiswithme.architecture.features.gallery.image.supporting_pane.ImageGallerySupportingPaneContract.UiState
+import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.SideEffect
+import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.UiAction
+import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPaneContract.UiState
 import com.istudio.godiswithme.common.mvi.MVI
 import com.istudio.godiswithme.common.mvi.mvi
 import com.istudio.godiswithme.core.logger.applogger.local.Logger

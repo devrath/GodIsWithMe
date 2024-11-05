@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.features.gallery.image
+package com.istudio.godiswithme.architecture.features.home.gallery
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -6,9 +6,9 @@ import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
-import com.istudio.godiswithme.architecture.features.gallery.image.extra_pane.ImageGalleryExtraPane
-import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPane
-import com.istudio.godiswithme.architecture.features.gallery.image.supporting_pane.ImageGallerySupportingPane
+import com.istudio.godiswithme.architecture.features.home.gallery.extra_pane.ImageGalleryExtraPane
+import com.istudio.godiswithme.architecture.features.home.gallery.main_pane.ImageGalleryMainPane
+import com.istudio.godiswithme.architecture.features.home.gallery.supporting_pane.ImageGallerySupportingPane
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable

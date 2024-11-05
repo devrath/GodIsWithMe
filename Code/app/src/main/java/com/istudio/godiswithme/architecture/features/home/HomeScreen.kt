@@ -2,7 +2,7 @@ package com.istudio.godiswithme.architecture.features.home
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
-import androidx.compose.material.icons.filled.MusicNote
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
@@ -18,8 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.window.core.layout.WindowWidthSizeClass
 import com.istudio.godiswithme.R
-import com.istudio.godiswithme.architecture.features.gallery.audio.AudioGalleryScreen
-import com.istudio.godiswithme.architecture.features.gallery.image.ImageGalleryScreen
+import com.istudio.godiswithme.architecture.features.home.settings.Settings
+import com.istudio.godiswithme.architecture.features.home.gallery.ImageGalleryScreen
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
@@ -44,7 +44,7 @@ fun HomeScreen(navController: NavHostController) {
     {
         when (selected.value) {
             HomeDest.IMAGE_GALLERY.name -> ImageGalleryScreen()
-            HomeDest.AUDIO_GALLERY.name -> AudioGalleryScreen()
+            HomeDest.SETTINGS.name -> Settings()
         }
     }
 }
@@ -63,6 +63,6 @@ private fun NavigationSuiteScope.navigationSuiteItem(
 
 private enum class HomeDest(val resId:Int, val imageVector: ImageVector) {
     IMAGE_GALLERY(R.string.images, imageVector = Icons.Default.Image),
-    AUDIO_GALLERY(R.string.audio, imageVector = Icons.Default.MusicNote),
+    SETTINGS(R.string.settings, imageVector = Icons.Default.Settings),
 }
 
