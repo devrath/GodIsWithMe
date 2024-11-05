@@ -8,7 +8,12 @@ import com.istudio.godiswithme.application.MY_APPLICATON_LOGS
 import com.istudio.godiswithme.architecture.domain.GetGodsListUseCase
 import com.istudio.godiswithme.architecture.domain_entity.GodData
 import com.istudio.godiswithme.common.managers.AssetManager
+import com.istudio.godiswithme.common.mvi.MVI
+import com.istudio.godiswithme.common.mvi.mvi
 import com.istudio.godiswithme.core.logger.applogger.local.Logger
+import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneContract.SideEffect
+import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneContract.UiAction
+import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneContract.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -17,10 +22,7 @@ class ImageGalleryMainPaneVm(
     private val getGodsListUseCase: GetGodsListUseCase,
     private val assetManager: AssetManager,
     private val logger: Logger
-) : ViewModel() {
-
-    private val _state = MutableStateFlow<List<GodData>>(emptyList())
-    val state = _state.asStateFlow()
+) : ViewModel() , MVI<UiState, UiAction, SideEffect> by mvi(initialUiState()) {
 
     init {
         // Load initial data or handle any business logic
@@ -28,20 +30,8 @@ class ImageGalleryMainPaneVm(
             getGodsListUseCase.invoke().collect { godsList ->
                 // Handle the list of gods here
                 logger.d("result",godsList.toString())
-                _state.value = godsList
+                updateUiState { copy(listOfGods = godsList) }
             }
-        }
-    }
-
-    fun loadBitmap(path: String): Bitmap? {
-        return try {
-            val inputStream = assetManager.provide()?.open(path)
-            BitmapFactory.decodeStream(inputStream).also {
-                inputStream?.close()
-            }
-        } catch (e: Exception) {
-            logger.e(MY_APPLICATON_LOGS,e.message.orEmpty(),e)
-            null
         }
     }
 
@@ -50,3 +40,5 @@ class ImageGalleryMainPaneVm(
     }
 
 }
+
+private fun initialUiState(): UiState = UiState(isLoading = true)

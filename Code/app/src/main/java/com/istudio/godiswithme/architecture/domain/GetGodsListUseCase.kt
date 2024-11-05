@@ -45,8 +45,7 @@ class GetGodsListUseCase @Inject constructor(
         val coverImagePath =  ROOT_LOCATION.plus("/").plus(godFolder).plus("/").plus(COVER_IMAGE_LOCATION)
         val descriptionPath = ROOT_LOCATION.plus("/").plus(godFolder).plus("/").plus(GOD_DESCRIPTION_LOCATION)
 
-        //val godImageBitmap = loadBitmap(providedAssetManager, coverImagePath)
-        val godImageBitmap = getImageUriString(coverImagePath)
+        val godImageBitmap = getImageBitMap(coverImagePath)
         val descriptionData = loadDescriptionData(providedAssetManager, descriptionPath) ?: return null
 
         val englishData = descriptionData.data.firstOrNull { it.languageCode == "en" }
@@ -55,7 +54,8 @@ class GetGodsListUseCase @Inject constructor(
             languageCode = englishData?.languageCode.orEmpty(),
             language = englishData?.language.orEmpty(),
             description = englishData?.description.orEmpty(),
-            godImage = godImageBitmap
+            godImageUri = coverImagePath,
+            godImageBitmap = godImageBitmap
         )
     }
 
@@ -71,13 +71,14 @@ class GetGodsListUseCase @Inject constructor(
         }
     }
 
-    private fun getImageUriString(path: String): String? {
+    private fun getImageBitMap(path: String): Bitmap? {
         return try {
-            // Generate a URI string based on the asset path
-            //"file:///android_asset/$path"
-            path
+            val inputStream = assetManager.provide()?.open(path)
+            BitmapFactory.decodeStream(inputStream).also {
+                inputStream?.close()
+            }
         } catch (e: Exception) {
-            logger.e(MY_APPLICATON_LOGS, e.message.orEmpty(), e)
+            logger.e(MY_APPLICATON_LOGS,e.message.orEmpty(),e)
             null
         }
     }

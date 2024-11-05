@@ -90,15 +90,15 @@ fun SupportingPane(
                 .padding(it)
                 .fillMaxSize(), contentAlignment = Alignment.Center
         ) {
-            val bitmapImage = godData.godImage
+            val bitmapImage = godData.godImageUri
             if (bitmapImage != null) {
-                viewModel.loadBitmap(bitmapImage)?.asImageBitmap()?.let { bitmp ->
+               /* viewModel.loadBitmap(bitmapImage)?.asImageBitmap()?.let { bitmp ->
                     Image(
                         painter = BitmapPainter(bitmp),
                         contentDescription = "Click for more information",
                         modifier = Modifier.fillMaxSize()
                     )
-                }
+                }*/
 
             }
         }
@@ -116,10 +116,10 @@ fun ExtraPane(modifier: Modifier = Modifier, godData: GodData) {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            val bitmapImage = godData.godImage
+            val bitmapImage = godData.godImageUri
             if (bitmapImage != null) {
 
-                viewModel.loadBitmap(bitmapImage)?.asImageBitmap()?.let { bitmp ->
+                /*viewModel.loadBitmap(bitmapImage)?.asImageBitmap()?.let { bitmp ->
                     Image(
                         painter = BitmapPainter(bitmp),
                         contentDescription = godData.godName,
@@ -127,7 +127,7 @@ fun ExtraPane(modifier: Modifier = Modifier, godData: GodData) {
                             .fillMaxWidth()
                             .height(300.dp)
                     )
-                }
+                }*/
 
             }
 
