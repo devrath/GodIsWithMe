@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.istudio.godiswithme.navigation.SetupNavGraph
 import com.istudio.godiswithme.ux.designsystem.GodIsWithMeTheme
@@ -16,32 +15,29 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    val detailViewModel: MainViewModel by viewModel()
+    val mainActivity: MainVm by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             GodIsWithMeTheme {
-                val navController = rememberNavController()
-                SetupNavGraph(navController = navController)
+                MainScreen()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun MainScreen(modifier: Modifier = Modifier) {
+    val navController = rememberNavController()
+    SetupNavGraph(navController = navController)
 }
 
 @WindowSizeClassPreviews
 @Composable
 fun GreetingPreview() {
     GodIsWithMeTheme {
-        Greeting("Android")
+        MainScreen()
     }
 }
