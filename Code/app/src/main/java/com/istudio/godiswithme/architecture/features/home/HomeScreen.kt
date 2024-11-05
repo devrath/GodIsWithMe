@@ -24,7 +24,7 @@ import com.istudio.godiswithme.architecture.features.home.gallery.ImageGallerySc
 @Composable
 fun HomeScreen(navController: NavHostController) {
 
-    val selected = rememberSaveable { mutableStateOf(HomeDest.IMAGE_GALLERY.name) }
+    val selected = rememberSaveable { mutableStateOf(HomeDest.GODS_GALLERY.name) }
     val windowAdaptiveInfo = currentWindowAdaptiveInfo()
 
     val layoutType = when (windowAdaptiveInfo.windowSizeClass.windowWidthSizeClass) {
@@ -43,7 +43,7 @@ fun HomeScreen(navController: NavHostController) {
         })
     {
         when (selected.value) {
-            HomeDest.IMAGE_GALLERY.name -> ImageGalleryScreen()
+            HomeDest.GODS_GALLERY.name -> ImageGalleryScreen()
             HomeDest.SETTINGS.name -> Settings()
         }
     }
@@ -62,7 +62,7 @@ private fun NavigationSuiteScope.navigationSuiteItem(
 }
 
 private enum class HomeDest(val resId:Int, val imageVector: ImageVector) {
-    IMAGE_GALLERY(R.string.images, imageVector = Icons.Default.Image),
+    GODS_GALLERY(R.string.gods, imageVector = Icons.Default.Image),
     SETTINGS(R.string.settings, imageVector = Icons.Default.Settings),
 }
 
