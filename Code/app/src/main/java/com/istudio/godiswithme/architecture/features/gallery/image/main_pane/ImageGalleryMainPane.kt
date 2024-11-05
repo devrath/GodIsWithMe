@@ -28,10 +28,10 @@ import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ImageGalleryMainPane(modifier: Modifier = Modifier, onClick: (GodData) -> Unit) {
+fun ImageGalleryMainPane(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
     val viewModel: ImageGalleryMainPaneVm = koinViewModel()
     val (uiState, onAction, sideEffect) = viewModel.unpack()
-    CurrentScreen(uiState, sideEffect, onAction)
+    CurrentScreen(uiState, sideEffect, onAction, onClick)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,6 +40,7 @@ private fun CurrentScreen(
     uiState: UiState,
     sideEffect: Flow<SideEffect>,
     onAction: (UiAction) -> Unit,
+    onClick: (String) -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -70,7 +71,7 @@ private fun CurrentScreen(
                                 .fillMaxWidth()
                                 .padding(2.dp)
                                 .clickable {
-                                    //onClick.invoke(godData)
+                                    onClick.invoke(godData.godName)
                                 }
                         )
                     }

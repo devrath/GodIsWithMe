@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 
 class ImageGalleryMainPaneVm(
     private val getGodsListUseCase: GetGodsListUseCase,
-    private val assetManager: AssetManager,
     private val logger: Logger
 ) : ViewModel() , MVI<UiState, UiAction, SideEffect> by mvi(initialUiState()) {
 
@@ -33,10 +32,6 @@ class ImageGalleryMainPaneVm(
                 updateUiState { copy(listOfGods = godsList) }
             }
         }
-    }
-
-    fun loadImages() {
-        // Logic to load images
     }
 
 }

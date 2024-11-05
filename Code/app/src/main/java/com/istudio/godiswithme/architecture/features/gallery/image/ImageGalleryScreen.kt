@@ -33,12 +33,13 @@ import androidx.compose.ui.unit.dp
 import com.istudio.godiswithme.architecture.domain_entity.GodData
 import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPane
 import com.istudio.godiswithme.architecture.features.gallery.image.main_pane.ImageGalleryMainPaneVm
+import com.istudio.godiswithme.architecture.features.gallery.image.supporting_pane.ImageGallerySupportingPane
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun ImageGalleryScreen() {
-    val navigator = rememberSupportingPaneScaffoldNavigator<GodData>()
+    val navigator = rememberSupportingPaneScaffoldNavigator<String>()
 
     BackHandler(navigator.canNavigateBack()) {
         navigator.navigateBack()
@@ -54,55 +55,18 @@ fun ImageGalleryScreen() {
         },
         supportingPane = {
             navigator.currentDestination?.content?.let { it ->
-                SupportingPane(godData = it) {
-                    navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, it)
-                }
+                ImageGallerySupportingPane(godName = it) /*{
+                    //navigator.navigateTo(ThreePaneScaffoldRole.Tertiary, it)
+                }*/
             }
         },
         extraPane = {
             navigator.currentDestination?.content?.let {
-                ExtraPane(godData = it)
+                //ExtraPane(godData = it)
             }
         }
     )
 
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainPane(modifier: Modifier = Modifier, onClick: (GodData) -> Unit) {
-}
-
-@Composable
-fun SupportingPane(
-    modifier: Modifier = Modifier,
-    godData: GodData,
-    onClick: (GodData) -> Unit
-) {
-    val viewModel: ImageGalleryMainPaneVm = koinViewModel()
-    Scaffold(floatingActionButton = {
-        FloatingActionButton(onClick = { onClick.invoke(godData) }) {
-            Icon(imageVector = Icons.Default.Info, contentDescription = null)
-        }
-    }) {
-        Box(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize(), contentAlignment = Alignment.Center
-        ) {
-            val bitmapImage = godData.godImageUri
-            if (bitmapImage != null) {
-               /* viewModel.loadBitmap(bitmapImage)?.asImageBitmap()?.let { bitmp ->
-                    Image(
-                        painter = BitmapPainter(bitmp),
-                        contentDescription = "Click for more information",
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }*/
-
-            }
-        }
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
