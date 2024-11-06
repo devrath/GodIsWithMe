@@ -7,6 +7,7 @@ import androidx.media3.common.C
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.session.MediaSession
+import com.istudio.godiswithme.core.player.notification.JetAudioNotificationManager
 import com.istudio.godiswithme.core.player.service.JetAudioService
 import org.koin.dsl.module
 
@@ -45,12 +46,12 @@ val mediaModule = module {
         NotificationManagerCompat.from(get())
     }
 
-    /*single {
-        JetAudioNotificationManager(
-            context = get(),
-            exoPlayer = get()
-        )
+    // Current Apps Notification Manager Instance
+    single {
+        JetAudioNotificationManager(get(),get(),get())
     }
+
+    /*
 
     single {
         JetAudioServiceHandler(get())

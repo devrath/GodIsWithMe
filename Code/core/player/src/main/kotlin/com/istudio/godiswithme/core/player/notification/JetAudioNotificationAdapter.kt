@@ -12,6 +12,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 
+/**
+ * Observe we can access player inside session without the connector code -> Lot of boilerplate code is reduced
+ */
 @UnstableApi
 class JetAudioNotificationAdapter(
     private val context: Context,

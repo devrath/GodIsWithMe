@@ -53,7 +53,7 @@ class JetAudioNotificationManager(
             .setMediaDescriptionAdapter(
                 JetAudioNotificationAdapter(
                     context = context,
-                    pendingIntent = mediaSession.sessionActivity
+                    pendingIntent = mediaSession.sessionActivity // Observe the media session provides the pending intent
                 )
             )
             .setSmallIconResourceId(R.drawable.ic_microphone)
@@ -73,7 +73,7 @@ class JetAudioNotificationManager(
         val notification = Notification.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setCategory(Notification.CATEGORY_SERVICE)
             .build()
-        mediaSessionService.startForeground(NOTIFICATION_ID, notification)
+        mediaSessionService.startForeground(NOTIFICATION_ID, notification) // Observe the media session service is used to start the foreground service.
     }
 
 
