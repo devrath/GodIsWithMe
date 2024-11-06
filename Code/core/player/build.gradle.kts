@@ -49,6 +49,7 @@ dependencies {
 
     // <-----------------------  Media-3 -------------------->
     implementation(libs.media3.exoplayer)
+    implementation(libs.media3.session)
     api(libs.media3.common)
     api(libs.media3.ui)
     // <-----------------------  Media-3 -------------------->
