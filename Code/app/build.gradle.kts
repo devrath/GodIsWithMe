@@ -48,6 +48,7 @@ android {
 dependencies {
     implementation(projects.core.logger)
     implementation(projects.core.datasource)
+    implementation(projects.core.player)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

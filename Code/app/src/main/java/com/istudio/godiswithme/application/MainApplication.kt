@@ -2,6 +2,7 @@ package com.istudio.godiswithme.application
 
 import android.app.Application
 import com.istudio.godiswithme.core.logger.applogger.timber.TimberInit
+import com.istudio.godiswithme.core.player.di.mediaModule
 import com.istudio.godiswithme.di.appModule
 import com.istudio.godiswithme.di.firebaseParentModule
 import com.istudio.godiswithme.di.loggerParentModule
@@ -32,7 +33,7 @@ class MainApplication : Application(), KoinComponent {
         startKoin {
             androidContext(this@MainApplication)
             androidLogger()
-            modules(appModule,loggerParentModule,firebaseParentModule,viewModule)
+            modules(appModule,loggerParentModule,firebaseParentModule,viewModule,mediaModule)
         }
     }
 
