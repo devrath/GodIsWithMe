@@ -3,6 +3,7 @@ package com.istudio.godiswithme.di
 import com.istudio.godiswithme.architecture.data.repositoryimpl.GodRepositoryImpl
 import com.istudio.godiswithme.architecture.domain.repository.GodRepository
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodByNameUseCase
+import com.istudio.godiswithme.architecture.domain.usecases.GetGodSongsByNameUseCase
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodsListUseCase
 import com.istudio.godiswithme.architecture.features.home.gods.goddetails.GodDetailsVm
 import com.istudio.godiswithme.core.logger.di.crashlyticsLoggerModule
@@ -23,6 +24,7 @@ val appModule = module{
     single { AssetManager(get()) }
     single { GetGodsListUseCase(get()) }
     single { GetGodByNameUseCase(get()) }
+    single { GetGodSongsByNameUseCase(get()) }
     single<GodRepository> { GodRepositoryImpl(get(),get()) }
 }
 
