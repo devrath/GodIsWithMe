@@ -41,6 +41,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation(libs.glide)
+    implementation (libs.accompanist.permissions)
+
     // <-----------------------  Koin ----------------------->
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
@@ -50,6 +53,7 @@ dependencies {
     // <-----------------------  Media-3 -------------------->
     implementation(libs.media3.exoplayer)
     implementation(libs.media3.session)
+    implementation(libs.androidx.legacy.support.v4)
     api(libs.media3.common)
     api(libs.media3.ui)
     // <-----------------------  Media-3 -------------------->

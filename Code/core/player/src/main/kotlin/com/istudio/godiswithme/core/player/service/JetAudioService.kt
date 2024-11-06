@@ -7,10 +7,13 @@ import org.koin.android.ext.android.inject
 
 /**
  * Using this service we can expose the media session to the Android-OS notification
+ * Observe we can access player inside session without the connector code -> Lot of boilerplate code is reduced
  */
-class JetAudioService : MediaSessionService() {
+class JetAudioService(
+    private val mediaSession: MediaSession
+) : MediaSessionService() {
 
-    private val mediaSession: MediaSession by inject()
+    //private val mediaSession: MediaSession by inject()
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession =
         mediaSession
