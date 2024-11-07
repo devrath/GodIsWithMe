@@ -3,6 +3,7 @@
 package com.istudio.godiswithme.architecture.features.home.audio
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 
-private val initialAudio = Song(songName = "", songLocation = "", songLocationUri = null)
+private val initialAudio = Song(songName = "", songLocation = "")
 
 class AudioVm(
     private val getGodSongsByNameUseCase: GetGodSongsByNameUseCase,
@@ -84,6 +85,7 @@ class AudioVm(
 
     private fun setMediaItems() {
         audioList.map { audio ->
+            /*
             MediaItem.Builder()
                 .setUri(audio.songLocationUri)
                 .setMediaMetadata(
@@ -92,6 +94,9 @@ class AudioVm(
                         .build()
                 )
                 .build()
+                */
+            //audio.songLocationUri?.let { MediaItem.fromUri(it) }
+            MediaItem.fromUri(Uri.parse(audio.songLocation))
         }.also {
             audioServiceHandler.setMediaItemList(it)
         }

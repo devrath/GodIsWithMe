@@ -53,6 +53,7 @@ dependencies {
     // <-----------------------  Media-3 -------------------->
     implementation(libs.media3.exoplayer)
     implementation(libs.media3.session)
+    implementation(libs.media3.datasource)
     implementation(libs.androidx.legacy.support.v4)
     api(libs.media3.common)
     api(libs.media3.ui)

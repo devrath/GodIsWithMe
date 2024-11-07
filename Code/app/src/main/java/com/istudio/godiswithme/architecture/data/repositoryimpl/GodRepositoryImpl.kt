@@ -1,5 +1,7 @@
 package com.istudio.godiswithme.architecture.data.repositoryimpl
 
+import android.content.ContentResolver
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -18,7 +20,8 @@ import java.io.InputStreamReader
 
 class GodRepositoryImpl(
     private val assetManager: AssetManager,
-    private val logger: Logger
+    private val logger: Logger,
+    private val context: Context
 ): GodRepository {
 
     override fun getGodData(godName: String): Flow<GodData?> = flow {
@@ -54,16 +57,25 @@ class GodRepositoryImpl(
     override fun getAudioList(godName: String): Flow<List<Song>> = flow {
         val descriptionPath = "$ROOT_LOCATION/$godName/$GOD_DESCRIPTION_LOCATION"
         val descriptionData = loadDescriptionData(descriptionPath)
+        val songsPath = "$ROOT_LOCATION/$godName/$GOD_SONGS_LOCATION"
 
         val data = descriptionData?.data?.firstOrNull { it.languageCode == "en" }
 
         val songsList = data?.songs?.map { song ->
-            song.apply {
-                songLocationUri = Uri.parse(this.songLocation)
-            }
+            song.songLocation = songsPath.plus("/").plus(song.songLocation)
+            song
         } ?: emptyList()
 
         emit(songsList)
+    }
+
+    private fun getMp3UriFromAssets(fileName: String): Uri {
+        val assetFileDescriptor = context.assets.openFd(fileName)
+        val uri = Uri.parse(
+            ContentResolver.SCHEME_FILE + "://" + assetFileDescriptor.fileDescriptor
+        )
+        assetFileDescriptor.close()
+        return uri
     }
 
     private fun loadGodData(godFolder: String): GodData? {

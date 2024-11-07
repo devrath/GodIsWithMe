@@ -8,6 +8,5 @@ import java.net.URI
 @Serializable
 data class Song(
     val songName: String,
-    val songLocation: String,
-    @Transient var songLocationUri: Uri? = null,
+    var songLocation: String
 )

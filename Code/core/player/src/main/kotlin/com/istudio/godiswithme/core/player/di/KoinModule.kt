@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import androidx.core.app.NotificationManagerCompat
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
+import androidx.media3.datasource.AssetDataSource
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.session.MediaSession
 import com.istudio.godiswithme.core.player.notification.JetAudioNotificationManager
@@ -56,4 +58,7 @@ val mediaModule = module {
     single {
         JetAudioServiceHandler(get())
     }
+
+    // Define AssetDataSource instance
+    factory { AssetDataSource(get()) }
 }

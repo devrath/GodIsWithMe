@@ -87,10 +87,10 @@ fun HomeScreenPrev() {
             onProgress = {},
             isAudioPlaying = true,
             audiList = listOf(
-                Song(songName = "Name-1", songLocation = "", songLocationUri = null),
-                Song(songName = "Name-2", songLocation = "", songLocationUri = null),
+                Song(songName = "Name-1", songLocation = ""),
+                Song(songName = "Name-2", songLocation = ""),
             ),
-            currentPlayingAudio = Song(songName = "Name-1", songLocation = "", songLocationUri = null),
+            currentPlayingAudio = Song(songName = "Name-1", songLocation = ""),
             onStart = {},
             onSongClick = {},
             onNext = {}

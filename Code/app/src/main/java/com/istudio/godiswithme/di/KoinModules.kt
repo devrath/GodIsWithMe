@@ -27,7 +27,7 @@ val appModule = module{
     single { GetGodsListUseCase(get()) }
     single { GetGodByNameUseCase(get()) }
     single { GetGodSongsByNameUseCase(get()) }
-    single<GodRepository> { GodRepositoryImpl(get(),get()) }
+    single<GodRepository> { GodRepositoryImpl(get(),get(),get()) }
 }
 
 val viewModule = module {
