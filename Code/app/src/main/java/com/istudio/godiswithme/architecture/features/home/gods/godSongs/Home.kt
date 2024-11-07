@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MusicNote
@@ -20,7 +18,6 @@ import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -38,8 +35,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import com.istudio.godiswithme.architecture.domain.models.Song
+import com.istudio.godiswithme.architecture.features.home.gods.godSongs.composables.list.SongsListItem
+import com.istudio.godiswithme.architecture.features.home.gods.godSongs.composables.player.BottomBarPlayer
 import com.istudio.godiswithme.ux.designsystem.GodIsWithMeTheme
 import kotlin.math.floor
 
@@ -52,7 +50,7 @@ fun HomeScreen(
     currentPlayingAudio: Song,
     audiList: List<Song>,
     onStart: () -> Unit,
-    onItemClick: (Int) -> Unit,
+    onSongClick: (Int) -> Unit,
     onNext: () -> Unit,
 ) {
     Scaffold(
@@ -67,62 +65,9 @@ fun HomeScreen(
             )
         }
     ) {
-        LazyColumn(
-            contentPadding = it
-        ) {
-            itemsIndexed(audiList) { index, audio ->
-                AudioItem(
-                    audio = audio,
-                    onItemClick = { onItemClick(index) }
-                )
-            }
-        }
+        SongsListItem(paddingValues = it, data = audiList, onSongClick)
     }
 
-}
-
-@Composable
-fun AudioItem(
-    audio: Song,
-    onItemClick: () -> Unit,
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-            .clickable {
-                onItemClick()
-            },
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(8.dp),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Spacer(modifier = Modifier.size(4.dp))
-                Text(
-                    text = audio.songName,
-                    style = MaterialTheme.typography.titleLarge,
-                    overflow = TextOverflow.Clip,
-                    maxLines = 1
-                )
-                Spacer(modifier = Modifier.size(4.dp))
-                Text(
-                    text = "No Artist currently",
-                    style = MaterialTheme.typography.bodySmall,
-                    maxLines = 1,
-                    overflow = TextOverflow.Clip
-                )
-
-            }
-        }
-
-    }
 }
 
 private fun timeStampToDuration(position: Long): String {
@@ -131,147 +76,6 @@ private fun timeStampToDuration(position: Long): String {
     val remainingSeconds = totalSecond - (minutes * 60)
     return if (position < 0) "--:--"
     else "%d:%02d".format(minutes, remainingSeconds)
-}
-
-@Composable
-fun BottomBarPlayer(
-    progress: Float,
-    onProgress: (Float) -> Unit,
-    audio: Song,
-    isAudioPlaying: Boolean,
-    onStart: () -> Unit,
-    onNext: () -> Unit,
-) {
-    BottomAppBar(
-        content = {
-            Column(
-                modifier = Modifier.padding(8.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    ArtistInfo(
-                        audio = audio,
-                        modifier = Modifier.weight(1f),
-                    )
-                    MediaPlayerController(
-                        isAudioPlaying = isAudioPlaying,
-                        onStart = onStart,
-                        onNext = onNext
-                    )
-                    Slider(
-                        value = progress,
-                        onValueChange = { onProgress(it) },
-                        valueRange = 0f..100f
-                    )
-
-                }
-            }
-        }
-    )
-}
-
-@Composable
-fun MediaPlayerController(
-    isAudioPlaying: Boolean,
-    onStart: () -> Unit,
-    onNext: () -> Unit,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .height(56.dp)
-            .padding(4.dp)
-    ) {
-        PlayerIconItem(
-            icon = if (isAudioPlaying) Icons.Default.Pause
-            else Icons.Default.PlayArrow
-        ) {
-            onStart()
-        }
-        Spacer(modifier = Modifier.size(8.dp))
-        Icon(
-            imageVector = Icons.Default.SkipNext,
-            modifier = Modifier.clickable {
-                onNext()
-            },
-            contentDescription = null
-        )
-    }
-}
-
-@Composable
-fun ArtistInfo(
-    modifier: Modifier = Modifier,
-    audio: Song,
-) {
-    Row(
-        modifier = modifier.padding(4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        PlayerIconItem(
-            icon = Icons.Default.MusicNote,
-            borderStroke = BorderStroke(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-        ) {}
-        Spacer(modifier = Modifier.size(4.dp))
-        Column {
-            Text(
-                text = audio.songName,
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.titleLarge,
-                overflow = TextOverflow.Clip,
-                modifier = Modifier.weight(1f),
-                maxLines = 1
-            )
-            Spacer(modifier = Modifier.size(4.dp))
-            Text(
-                text = "NO Artist",
-                fontWeight = FontWeight.Normal,
-                style = MaterialTheme.typography.bodySmall,
-                overflow = TextOverflow.Clip,
-                maxLines = 1
-            )
-        }
-    }
-}
-
-@Composable
-fun PlayerIconItem(
-    modifier: Modifier = Modifier,
-    icon: ImageVector,
-    borderStroke: BorderStroke? = null,
-    backgroundColor: Color = MaterialTheme.colorScheme.surface,
-    color: Color = MaterialTheme.colorScheme.onSurface,
-    onClick: () -> Unit,
-) {
-    Surface(
-        shape = CircleShape,
-        border = borderStroke,
-        modifier = Modifier
-            .clip(CircleShape)
-            .clickable {
-                onClick()
-            },
-        contentColor = color,
-        color = backgroundColor
-    ) {
-        Box(
-            modifier = Modifier.padding(4.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null
-            )
-        }
-    }
 }
 
 @Preview(showSystemUi = true)
@@ -288,7 +92,7 @@ fun HomeScreenPrev() {
             ),
             currentPlayingAudio = Song(songName = "Name-1", songLocation = "", songLocationUri = null),
             onStart = {},
-            onItemClick = {},
+            onSongClick = {},
             onNext = {}
         )
     }

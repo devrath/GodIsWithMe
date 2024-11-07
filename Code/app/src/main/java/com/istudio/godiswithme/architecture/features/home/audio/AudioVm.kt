@@ -14,6 +14,7 @@ import androidx.lifecycle.viewmodel.compose.saveable
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import com.istudio.godiswithme.architecture.domain.models.Song
+import com.istudio.godiswithme.architecture.domain.usecases.GetGodSongsByNameUseCase
 import com.istudio.godiswithme.core.logger.applogger.local.Logger
 import com.istudio.godiswithme.core.player.service.JetAudioServiceHandler
 import com.istudio.godiswithme.core.player.service.JetAudioState
@@ -29,6 +30,7 @@ import java.util.concurrent.TimeUnit
 private val initialAudio = Song(songName = "", songLocation = "", songLocationUri = null)
 
 class AudioVm(
+    private val getGodSongsByNameUseCase: GetGodSongsByNameUseCase,
     private val audioServiceHandler: JetAudioServiceHandler,
     private val logger: Logger,
     private val savedStateHandle: SavedStateHandle,
@@ -63,10 +65,13 @@ class AudioVm(
         }
     }
 
-    private fun loadAudioData(listOfSongs: List<Song>) {
+    fun loadAudioData(godName: String) {
         viewModelScope.launch {
-            audioList = listOfSongs
-            setMediaItems()
+            getGodSongsByNameUseCase.invoke(godName).collect { godData ->
+                logger.d("result",godData.toString())
+                audioList = godData
+                setMediaItems()
+            }
         }
     }
 

@@ -12,39 +12,67 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenContract.SideEffect
-import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenContract.UiAction
-import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenContract.UiState
-import com.istudio.godiswithme.common.mvi.unpack
-import kotlinx.coroutines.flow.Flow
+import com.istudio.godiswithme.architecture.domain.models.Song
+import com.istudio.godiswithme.architecture.features.home.audio.AudioVm
+import com.istudio.godiswithme.architecture.features.home.audio.UIEvents
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun GodSongsScreen(modifier: Modifier = Modifier, godName: String) {
-    val viewModel: GodSongsVm = koinViewModel()
-    val (uiState, onAction, sideEffect) = viewModel.unpack()
-    CurrentScreen(uiState, sideEffect, onAction, godName)
+    val audioVm: AudioVm = koinViewModel()
+
+    LaunchedEffect(Unit) { audioVm.loadAudioData(godName) }
+
+    CurrentScreen(
+        godName = godName,
+        progress = audioVm.progress,
+        onProgress = { audioVm.onUiEvents(UIEvents.SeekTo(it)) },
+        isAudioPlaying = audioVm.isPlaying,
+        audiList = audioVm.audioList,
+        currentPlayingAudio = audioVm.currentSelectedAudio,
+        onStart = {
+            audioVm.onUiEvents(UIEvents.PlayPause)
+        },
+        onSongClick = {
+            audioVm.onUiEvents(UIEvents.SelectedAudioChange(it))
+            //startService()
+        },
+        onNext = {
+            audioVm.onUiEvents(UIEvents.SeekToNext)
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CurrentScreen(
-    uiState: UiState,
-    sideEffect: Flow<SideEffect>,
-    onAction: (UiAction) -> Unit,
     godName: String,
+    progress: Float,
+    onProgress: (Float) -> Unit,
+    isAudioPlaying: Boolean,
+    currentPlayingAudio: Song,
+    onStart: () -> Unit,
+    audiList: List<Song>,
+    onSongClick: (Int) -> Unit,
+    onNext: () -> Unit,
 ) {
-
-    LaunchedEffect(Unit) { onAction(UiAction.LoadScreen(godName)) }
 
     Scaffold(topBar = { TopAppBar(title = { Text(text = godName) }) }) {
         Column(
             modifier = Modifier
                 .padding(it)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
         ) {
-
+            HomeScreen(
+                progress = progress,
+                onProgress = onProgress,
+                isAudioPlaying = isAudioPlaying,
+                audiList = audiList,
+                currentPlayingAudio = currentPlayingAudio,
+                onStart = onStart,
+                onSongClick = onSongClick,
+                onNext = onNext
+            )
         }
     }
 

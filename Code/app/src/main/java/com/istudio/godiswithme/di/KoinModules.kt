@@ -36,8 +36,7 @@ val viewModule = module {
     viewModel { GodScreenVm(get(),get()) }
     viewModel { GodDetailsVm(get(),get()) }
     viewModel { GodSongsVm(get(),get()) }
-    viewModel { AudioVm(get(),get(),get()) }
-
+    viewModel { AudioVm(get(),get(),get(),get()) }
 }
 
 val loggerParentModule = module {
