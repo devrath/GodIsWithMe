@@ -1,21 +1,29 @@
+@file:OptIn(SavedStateHandleSaveableApi::class)
+
 package com.istudio.godiswithme.main
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.istudio.godiswithme.common.mvi.MVI
-import com.istudio.godiswithme.common.mvi.mvi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import com.istudio.godiswithme.main.MainContract.UiState
-import com.istudio.godiswithme.main.MainContract.UiAction
-import com.istudio.godiswithme.main.MainContract.SideEffect
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 
-class MainVm : ViewModel() , MVI<UiState, UiAction, SideEffect> by mvi(initialUiState()) {
+/**
+ * Main View model will be a shared view model which we shall use for communication from all the components
+ */
+class MainVm(
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
-    private val _isReady = MutableStateFlow(false)
-    val isReady = _isReady.asStateFlow()
+    var isAudioServiceRunning by savedStateHandle.saveable { mutableStateOf(false) }
 
-
+    private val _eventChannel = Channel<MainUiState>(Channel.BUFFERED)
+    val events = _eventChannel.receiveAsFlow()
 
 }
 
-private fun initialUiState(): UiState = UiState
+sealed class MainUiState {
+    data object StartPlayerService : MainUiState()
+}

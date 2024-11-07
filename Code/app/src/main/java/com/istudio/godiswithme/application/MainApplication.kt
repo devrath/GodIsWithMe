@@ -14,7 +14,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.context.GlobalContext.startKoin
 
 
-const val MY_APPLICATON_LOGS = "myApplicationLogs"
+const val APP_TAG = "myApplicationLogs"
 class MainApplication : Application(), KoinComponent {
 
     companion object {

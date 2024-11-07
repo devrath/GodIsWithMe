@@ -3,7 +3,7 @@ package com.istudio.godiswithme.architecture.data.repositoryimpl
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import com.istudio.godiswithme.application.MY_APPLICATON_LOGS
+import com.istudio.godiswithme.application.APP_TAG
 import com.istudio.godiswithme.architecture.domain.models.DescriptionData
 import com.istudio.godiswithme.architecture.domain.models.GodData
 import com.istudio.godiswithme.architecture.domain.models.Song
@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
 import java.io.IOException
 import java.io.InputStreamReader
-import java.net.URI
 
 class GodRepositoryImpl(
     private val assetManager: AssetManager,
@@ -32,7 +31,7 @@ class GodRepositoryImpl(
 
             emit(godData)
         } catch (e: IOException) {
-            logger.e(MY_APPLICATON_LOGS, e.message.orEmpty(), e)
+            logger.e(APP_TAG, e.message.orEmpty(), e)
             emit(null)
         }
     }
@@ -47,7 +46,7 @@ class GodRepositoryImpl(
 
             emit(listOfGods)
         } catch (e: IOException) {
-            logger.e(MY_APPLICATON_LOGS, e.message.orEmpty(), e)
+            logger.e(APP_TAG, e.message.orEmpty(), e)
             emit(emptyList())
         }
     }
@@ -92,7 +91,7 @@ class GodRepositoryImpl(
                 BitmapFactory.decodeStream(inputStream)
             }
         } catch (e: Exception) {
-            logger.e(MY_APPLICATON_LOGS, e.message.orEmpty(), e)
+            logger.e(APP_TAG, e.message.orEmpty(), e)
             null
         }
     }
@@ -106,7 +105,7 @@ class GodRepositoryImpl(
                 Json.decodeFromString<T>(reader.readText())
             }
         } catch (e: IOException) {
-            logger.e(MY_APPLICATON_LOGS, e.message.orEmpty(), e)
+            logger.e(APP_TAG, e.message.orEmpty(), e)
             null
         }
     }

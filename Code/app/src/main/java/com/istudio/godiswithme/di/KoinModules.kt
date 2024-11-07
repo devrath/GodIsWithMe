@@ -31,7 +31,7 @@ val appModule = module{
 }
 
 val viewModule = module {
-    viewModel { MainVm() }
+    viewModel { MainVm(get()) }
     viewModel { GodGalleryVm(get(),get()) }
     viewModel { GodScreenVm(get(),get()) }
     viewModel { GodDetailsVm(get(),get()) }
