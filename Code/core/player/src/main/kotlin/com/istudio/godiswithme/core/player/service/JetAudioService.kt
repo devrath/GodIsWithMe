@@ -7,17 +7,16 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import com.istudio.godiswithme.core.player.notification.JetAudioNotificationManager
+import org.koin.android.ext.android.inject
 
 /**
  * Using this service we can expose the media session to the Android-OS notification
  * Observe we can access player inside session without the connector code -> Lot of boilerplate code is reduced
  */
-class JetAudioService(
-    private val mediaSession: MediaSession,
-    private val notificationManager: JetAudioNotificationManager
-) : MediaSessionService() {
+class JetAudioService() : MediaSessionService() {
 
-    //private val mediaSession: MediaSession by inject()
+    private val mediaSession: MediaSession by inject()
+    private val notificationManager: JetAudioNotificationManager by inject()
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession =
         mediaSession

@@ -41,7 +41,7 @@ val mediaModule = module {
 
     // MediaSession Service Instance
     single {
-        JetAudioService(get(),get())
+        JetAudioService()
     }
 
     // Notification manager compact
