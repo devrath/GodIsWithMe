@@ -60,7 +60,7 @@ class GodRepositoryImpl(
 
         val songsList = data?.songs?.map { song ->
             song.apply {
-                songLocationUri = URI(this.songLocation)
+                songLocationUri = Uri.parse(this.songLocation)
             }
         } ?: emptyList()
 

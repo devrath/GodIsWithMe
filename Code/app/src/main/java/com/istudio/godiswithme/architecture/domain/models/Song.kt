@@ -9,5 +9,5 @@ import java.net.URI
 data class Song(
     val songName: String,
     val songLocation: String,
-    @Transient var songLocationUri: URI? = null,
+    @Transient var songLocationUri: Uri? = null,
 )
