@@ -22,7 +22,10 @@ import com.istudio.godiswithme.architecture.features.home.settings.Settings
 import com.istudio.godiswithme.architecture.features.home.gods.ImageGalleryScreen
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(
+    navController: NavHostController,
+    invokeAudioService : () -> Unit
+) {
 
     val selected = rememberSaveable { mutableStateOf(HomeDest.GODS_GALLERY.name) }
     val windowAdaptiveInfo = currentWindowAdaptiveInfo()
@@ -43,7 +46,7 @@ fun HomeScreen(navController: NavHostController) {
         })
     {
         when (selected.value) {
-            HomeDest.GODS_GALLERY.name -> ImageGalleryScreen()
+            HomeDest.GODS_GALLERY.name -> ImageGalleryScreen(invokeAudioService = invokeAudioService)
             HomeDest.SETTINGS.name -> Settings()
         }
     }

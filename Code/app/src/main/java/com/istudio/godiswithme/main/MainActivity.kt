@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.istudio.godiswithme.application.APP_TAG
+import com.istudio.godiswithme.architecture.features.home.audio.AudioVm
 import com.istudio.godiswithme.core.logger.applogger.local.Logger
 import com.istudio.godiswithme.core.player.service.JetAudioService
 import com.istudio.godiswithme.navigation.SetupNavGraph
@@ -35,7 +36,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             GodIsWithMeTheme {
-                MainScreen()
+                MainScreen(invokeAudioService = {
+                    startService()
+                })
             }
         }
         observeEvents()
@@ -72,15 +75,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun MainScreen(modifier: Modifier = Modifier) {
+private fun MainScreen(
+    modifier: Modifier = Modifier,
+    invokeAudioService : () -> Unit
+) {
     val navController = rememberNavController()
-    SetupNavGraph(navController = navController)
+    SetupNavGraph(
+        navController = navController,
+        invokeAudioService = invokeAudioService
+    )
 }
 
 @WindowSizeClassPreviews
 @Composable
 private fun MainScreenPreview() {
     GodIsWithMeTheme {
-        MainScreen()
+        MainScreen(invokeAudioService = {})
     }
 }

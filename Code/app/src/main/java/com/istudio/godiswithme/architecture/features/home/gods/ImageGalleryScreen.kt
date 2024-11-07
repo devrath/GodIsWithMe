@@ -13,7 +13,9 @@ import com.istudio.godiswithme.architecture.features.home.gods.godSongs.GodSongs
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun ImageGalleryScreen() {
+fun ImageGalleryScreen(
+    invokeAudioService : () -> Unit
+) {
     val navigator = rememberSupportingPaneScaffoldNavigator<GodDestination>()
 
     BackHandler(navigator.canNavigateBack()) {
@@ -45,7 +47,10 @@ fun ImageGalleryScreen() {
             navigator.currentDestination?.content?.let { godDestination ->
                 when (godDestination) {
                     is GodDestination.GodDetails -> GodDetailsScreen(godName = godDestination.godName)
-                    is GodDestination.GodDetailsSongs -> GodSongsScreen(godName = godDestination.godName)
+                    is GodDestination.GodDetailsSongs -> GodSongsScreen(
+                        godName = godDestination.godName,
+                        invokeAudioService = invokeAudioService
+                    )
                 }
             }
         }

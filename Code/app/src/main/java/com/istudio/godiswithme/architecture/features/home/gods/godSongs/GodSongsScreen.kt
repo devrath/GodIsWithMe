@@ -18,7 +18,11 @@ import com.istudio.godiswithme.architecture.features.home.audio.UIEvents
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun GodSongsScreen(modifier: Modifier = Modifier, godName: String) {
+fun GodSongsScreen(
+    modifier: Modifier = Modifier,
+    godName: String,
+    invokeAudioService : () -> Unit
+) {
     val audioVm: AudioVm = koinViewModel()
 
     LaunchedEffect(Unit) { audioVm.loadAudioData(godName) }
@@ -35,7 +39,7 @@ fun GodSongsScreen(modifier: Modifier = Modifier, godName: String) {
         },
         onSongClick = {
             audioVm.onUiEvents(UIEvents.SelectedAudioChange(it))
-            //startService()
+            invokeAudioService()
         },
         onNext = {
             audioVm.onUiEvents(UIEvents.SeekToNext)
