@@ -1,10 +1,12 @@
 package com.istudio.godiswithme.di
 
+import androidx.lifecycle.SavedStateHandle
 import com.istudio.godiswithme.architecture.data.repositoryimpl.GodRepositoryImpl
 import com.istudio.godiswithme.architecture.domain.repository.GodRepository
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodByNameUseCase
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodSongsByNameUseCase
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodsListUseCase
+import com.istudio.godiswithme.architecture.features.home.audio.AudioVm
 import com.istudio.godiswithme.architecture.features.home.gods.goddetails.GodDetailsVm
 import com.istudio.godiswithme.core.logger.di.crashlyticsLoggerModule
 import com.istudio.godiswithme.core.logger.di.firebaseModule
@@ -34,6 +36,8 @@ val viewModule = module {
     viewModel { GodScreenVm(get(),get()) }
     viewModel { GodDetailsVm(get(),get()) }
     viewModel { GodSongsVm(get(),get()) }
+    viewModel { AudioVm(get(),get(),get()) }
+
 }
 
 val loggerParentModule = module {
