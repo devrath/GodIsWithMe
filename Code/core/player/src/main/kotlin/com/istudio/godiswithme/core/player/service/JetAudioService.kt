@@ -1,16 +1,20 @@
 package com.istudio.godiswithme.core.player.service
 
+import android.content.Intent
+import android.os.Build
 import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
-import org.koin.android.ext.android.inject
+import com.istudio.godiswithme.core.player.notification.JetAudioNotificationManager
 
 /**
  * Using this service we can expose the media session to the Android-OS notification
  * Observe we can access player inside session without the connector code -> Lot of boilerplate code is reduced
  */
 class JetAudioService(
-    private val mediaSession: MediaSession
+    private val mediaSession: MediaSession,
+    private val notificationManager: JetAudioNotificationManager
 ) : MediaSessionService() {
 
     //private val mediaSession: MediaSession by inject()
@@ -18,6 +22,16 @@ class JetAudioService(
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession =
         mediaSession
 
+    @UnstableApi
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.startNotificationService(
+                mediaSession = mediaSession,
+                mediaSessionService = this
+            )
+        }
+        return super.onStartCommand(intent, flags, startId)
+    }
 
     override fun onDestroy() {
         super.onDestroy()

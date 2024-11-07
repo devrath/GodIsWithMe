@@ -9,6 +9,7 @@ import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.session.MediaSession
 import com.istudio.godiswithme.core.player.notification.JetAudioNotificationManager
 import com.istudio.godiswithme.core.player.service.JetAudioService
+import com.istudio.godiswithme.core.player.service.JetAudioServiceHandler
 import org.koin.dsl.module
 
 @SuppressLint("UnsafeOptInUsageError")
@@ -38,7 +39,7 @@ val mediaModule = module {
 
     // MediaSession Service Instance
     single {
-        JetAudioService(get())
+        JetAudioService(get(),get())
     }
 
     // Notification manager compact
@@ -51,9 +52,8 @@ val mediaModule = module {
         JetAudioNotificationManager(get(),get(),get())
     }
 
-    /*
-
+    // Implementing player interface
     single {
         JetAudioServiceHandler(get())
-    }*/
+    }
 }
