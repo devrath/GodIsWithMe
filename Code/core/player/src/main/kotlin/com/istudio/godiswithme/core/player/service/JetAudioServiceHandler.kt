@@ -3,6 +3,7 @@ package com.istudio.godiswithme.core.player.service
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -48,12 +49,12 @@ class JetAudioServiceHandler(
         seekPosition: Long = 0,
     ) {
         when (playerEvent) {
-            PlayerEvent.Backward -> exoPlayer.seekBack()
-            PlayerEvent.Forward -> exoPlayer.seekForward()
-            PlayerEvent.SeekToNext -> exoPlayer.seekToNext()
-            PlayerEvent.PlayPause -> playOrPause()
-            PlayerEvent.SeekTo -> exoPlayer.seekTo(seekPosition)
-            PlayerEvent.SelectedAudioChange -> {
+            is PlayerEvent.Backward -> exoPlayer.seekBack()
+            is PlayerEvent.Forward -> exoPlayer.seekForward()
+            is PlayerEvent.SeekToNext -> exoPlayer.seekToNext()
+            is PlayerEvent.PlayPause -> playOrPause()
+            is PlayerEvent.SeekTo -> exoPlayer.seekTo(seekPosition)
+            is PlayerEvent.SelectedAudioChange -> {
                 when (selectedAudioIndex) {
                     exoPlayer.currentMediaItemIndex -> {
                         playOrPause()
@@ -70,7 +71,7 @@ class JetAudioServiceHandler(
                 }
             }
 
-            PlayerEvent.Stop -> stopProgressUpdate()
+            is PlayerEvent.Stop -> stopProgressUpdate()
             is PlayerEvent.UpdateProgress -> {
                 exoPlayer.seekTo(
                     (exoPlayer.duration * playerEvent.newProgress).toLong()
@@ -89,6 +90,7 @@ class JetAudioServiceHandler(
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onIsPlayingChanged(isPlaying: Boolean) {
         _audioState.value = JetAudioState.Playing(isPlaying = isPlaying)
         _audioState.value = JetAudioState.CurrentPlaying(exoPlayer.currentMediaItemIndex)
@@ -111,6 +113,8 @@ class JetAudioServiceHandler(
             else -> {
                 // Media is paused ----> Play the Media
                 exoPlayer.play()
+                // Set the state that player is playing
+                _audioState.value = JetAudioState.Playing(isPlaying = true)
                 startProgressUpdate()
             }
         }
@@ -118,8 +122,6 @@ class JetAudioServiceHandler(
 
 
     private suspend fun startProgressUpdate() = job.run {
-        // Set the state that player is playing
-        _audioState.value = JetAudioState.Playing(isPlaying = true)
         while (true) {
             delay(500)
             // Set the state of the progress with a value
