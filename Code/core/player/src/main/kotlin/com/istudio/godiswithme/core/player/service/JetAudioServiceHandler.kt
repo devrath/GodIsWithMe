@@ -2,7 +2,10 @@ package com.istudio.godiswithme.core.player.service
 
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.AssetDataSource
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -19,8 +22,10 @@ import kotlinx.coroutines.launch
  * <*> The states of the player
  * <*> Progress Updates
  */
+@androidx.annotation.OptIn(UnstableApi::class)
 class JetAudioServiceHandler(
     private val exoPlayer: ExoPlayer,
+    private val assetDataSource: AssetDataSource,
 ) : Player.Listener {
 
     private val _audioState: MutableStateFlow<JetAudioState> =
@@ -33,15 +38,33 @@ class JetAudioServiceHandler(
         exoPlayer.addListener(this)
     }
 
+    /**
+     * We set the media source from locally for one media item
+     */
     fun addMediaItem(mediaItem: MediaItem) {
-        exoPlayer.setMediaItem(mediaItem)
-        exoPlayer.prepare()
+        exoPlayer.apply {
+            setMediaSource(prepareProgressiveMediaSource(mediaItem))
+            prepare()
+        }
     }
 
+    /**
+     * We set the media sources from locally from a list of media items
+     */
     fun setMediaItemList(mediaItems: List<MediaItem>) {
-        exoPlayer.setMediaItems(mediaItems)
-        exoPlayer.prepare()
+        mediaItems.map {
+            prepareProgressiveMediaSource(it)
+        }.also { sources ->
+            exoPlayer.apply {
+                setMediaSources(sources)
+                prepare()
+            }
+        }
     }
+
+    private fun prepareProgressiveMediaSource(mediaItem: MediaItem) =
+        ProgressiveMediaSource.Factory { assetDataSource }
+            .createMediaSource(mediaItem)
 
     suspend fun onPlayerEvents(
         playerEvent: PlayerEvent,

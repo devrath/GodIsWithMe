@@ -56,7 +56,7 @@ val mediaModule = module {
 
     // Implementing player interface
     single {
-        JetAudioServiceHandler(get())
+        JetAudioServiceHandler(get(),get())
     }
 
     // Define AssetDataSource instance

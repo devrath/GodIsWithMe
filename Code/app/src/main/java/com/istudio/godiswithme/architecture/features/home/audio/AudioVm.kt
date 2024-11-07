@@ -85,17 +85,6 @@ class AudioVm(
 
     private fun setMediaItems() {
         audioList.map { audio ->
-            /*
-            MediaItem.Builder()
-                .setUri(audio.songLocationUri)
-                .setMediaMetadata(
-                    MediaMetadata.Builder()
-                        .setDisplayTitle(audio.songName)
-                        .build()
-                )
-                .build()
-                */
-            //audio.songLocationUri?.let { MediaItem.fromUri(it) }
             MediaItem.fromUri(Uri.parse(audio.songLocation))
         }.also {
             audioServiceHandler.setMediaItemList(it)
