@@ -22,12 +22,12 @@ class GodRepositoryImpl(
     private val context: Context
 ): GodRepository {
 
-    override fun getGodData(godName: String): Flow<GodData?> = flow {
+    override fun getGodData(godName: String,languageCode: String): Flow<GodData?> = flow {
         try {
             val godData = assetManager.provide()
                 ?.list(ROOT_LOCATION)
                 .orEmpty()
-                .mapNotNull { godFolder -> loadGodData(godFolder) }
+                .mapNotNull { godFolder -> loadGodData(godFolder, languageCode) }
                 .firstOrNull { it.godName == godName }
 
             emit(godData)
@@ -43,7 +43,7 @@ class GodRepositoryImpl(
             val listOfGods = assetManager.provide()
                 ?.list(ROOT_LOCATION)
                 .orEmpty()
-                .mapNotNull { godFolder -> loadGodData(godFolder) }
+                .mapNotNull { godFolder -> loadGodData(godFolder,languageCode) }
 
             emit(listOfGods)
         } catch (e: IOException) {
@@ -52,12 +52,12 @@ class GodRepositoryImpl(
         }
     }
 
-    override fun getAudioList(godName: String): Flow<List<Song>> = flow {
+    override fun getAudioList(godName: String,languageCode: String): Flow<List<Song>> = flow {
         val descriptionPath = constructPath(godName, GOD_DESCRIPTION_LOCATION)
         val songsPath = constructPath(godName, GOD_SONGS_LOCATION)
 
         val descriptionData = parseJsonDataToModel(descriptionPath)
-        val data = mapGodDataWithLanguageCode(descriptionData, "en")
+        val data = mapGodDataWithLanguageCode(descriptionData, languageCode)
 
         val songsList = data?.songs?.map { song ->
             song.songLocation = songsPath.plus("/").plus(song.songLocation)
@@ -74,14 +74,14 @@ class GodRepositoryImpl(
     /**
      * Get the god data in model w.r.t the god folder name
      */
-    private fun loadGodData(godName: String): GodData? {
+    private fun loadGodData(godName: String, languageCode: String): GodData? {
         val coverImagePath = constructPath(godName, COVER_IMAGE_LOCATION)
         val descriptionPath = constructPath(godName, GOD_DESCRIPTION_LOCATION)
 
         val godImageBitmap = getGodImageAsBitmapFromAssets(coverImagePath) ?: return null
         val descriptionData = parseJsonDataToModel(descriptionPath) ?: return null
 
-        val data = mapGodDataWithLanguageCode(descriptionData, "en")
+        val data = mapGodDataWithLanguageCode(descriptionData, languageCode)
 
         return GodData(
             godName = descriptionData.metaData.godName,

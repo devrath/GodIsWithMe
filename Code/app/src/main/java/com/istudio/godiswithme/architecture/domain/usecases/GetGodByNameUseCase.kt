@@ -10,6 +10,8 @@ class GetGodByNameUseCase @Inject constructor(
     private val repository: GodRepository
 ) : UseCaseFlowWithParam<String, GodData?> {
 
-    override fun invoke(param: String): Flow<GodData?> = repository.getGodData(param)
+    override fun invoke(param: String): Flow<GodData?> = repository.getGodData(
+        godName = param, languageCode = "en"
+    )
 
 }

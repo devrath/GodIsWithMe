@@ -9,7 +9,7 @@ class GetGodsListUseCase(
     private val repository: GodRepository
 ) : UseCaseFlow<List<GodData>> {
 
-    override fun invoke(): Flow<List<GodData>> = repository.getGodList("en")
+    override fun invoke(): Flow<List<GodData>> = repository.getGodList(languageCode = "en")
 
 }
 

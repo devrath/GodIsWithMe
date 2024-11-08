@@ -10,6 +10,8 @@ class GetGodSongsByNameUseCase @Inject constructor(
     private val repository: GodRepository
 ) : UseCaseFlowWithParam<String, List<Song>> {
 
-    override fun invoke(param: String): Flow<List<Song>> = repository.getAudioList(param)
+    override fun invoke(param: String): Flow<List<Song>> = repository.getAudioList(
+        godName = param, languageCode = "en"
+    )
 
 }

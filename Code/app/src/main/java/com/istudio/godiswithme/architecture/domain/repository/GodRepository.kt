@@ -5,7 +5,7 @@ import com.istudio.godiswithme.architecture.domain.models.Song
 import kotlinx.coroutines.flow.Flow
 
 interface GodRepository {
-    fun getGodData(godName: String) : Flow<GodData?>
+    fun getGodData(godName: String, languageCode: String) : Flow<GodData?>
     fun getGodList(languageCode: String) : Flow<List<GodData>>
-    fun getAudioList(godName: String) : Flow<List<Song>>
+    fun getAudioList(godName: String,languageCode: String) : Flow<List<Song>>
 }
