@@ -1,5 +1,6 @@
 package com.istudio.godiswithme.architecture.features.home.settings
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,16 +19,19 @@ import androidx.compose.material.icons.filled.Language
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryScreenContract.UiState
-import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryScreenContract.UiAction
-import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryScreenContract.SideEffect
+import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreenContract.UiState
+import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreenContract.UiAction
+import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreenContract.SideEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.istudio.godiswithme.R
+import com.istudio.godiswithme.architecture.features.home.settings.composables.SettingsRow
+import com.istudio.godiswithme.common.mvi.CollectSideEffect
 import com.istudio.godiswithme.common.mvi.unpack
 import com.istudio.godiswithme.ux.designsystem.GodIsWithMeTheme
 import com.istudio.godiswithme.ux.designsystem.preview.WindowSizeClassPreviews
@@ -48,6 +52,16 @@ private fun CurrentScreen(
     sideEffect: Flow<SideEffect>,
     onAction: (UiAction) -> Unit,
 ) {
+    val context = LocalContext.current
+
+    CollectSideEffect(sideEffect) {
+        when (it) {
+            SideEffect.DisplayError -> {
+                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     Scaffold {
         Column(
             modifier = Modifier
@@ -61,47 +75,13 @@ private fun CurrentScreen(
             SettingsRow(
                 rowImage = rowImage,
                 rowName = language,
-                selectedLanguage = "Default",
+                selectedLanguage = uiState.language.displayName,
             ){
-
+                onAction(UiAction.OnLanguageChangeClick)
             }
         }
     }
 
-}
-
-@Composable
-private fun SettingsRow(
-    modifier: Modifier = Modifier,
-    selectedLanguage: String,
-    rowImage: ImageVector,
-    rowName: String,
-    languageClickAction:() -> Unit
-) {
-
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(top = 10.dp, bottom = 10.dp).clickable(onClick = languageClickAction),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(
-            modifier = Modifier.wrapContentSize(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(imageVector = rowImage, contentDescription = rowName)
-            Spacer(modifier = Modifier.width(5.dp))
-            Text(rowName)
-        }
-        Row(
-            modifier = Modifier.wrapContentSize(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(selectedLanguage)
-            Icon(imageVector = Icons.Default.ChevronRight, contentDescription = selectedLanguage)
-        }
-    }
 }
 
 @WindowSizeClassPreviews

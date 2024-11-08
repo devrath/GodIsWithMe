@@ -25,7 +25,7 @@ import com.istudio.godiswithme.ux.designsystem.GodIsWithMeTheme
 import com.istudio.godiswithme.ux.designsystem.preview.WindowSizeClassPreviews
 
 @Composable
-private fun SettingsRow(
+fun SettingsRow(
     modifier: Modifier = Modifier,
     selectedLanguage: String,
     rowImage: ImageVector,
