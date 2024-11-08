@@ -1,5 +1,6 @@
 package com.istudio.godiswithme.architecture.features.home.gods
 
+import android.os.Parcelable
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
@@ -10,6 +11,7 @@ import com.istudio.godiswithme.architecture.features.home.gods.goddetails.GodDet
 import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryScreen
 import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreen
 import com.istudio.godiswithme.architecture.features.home.gods.godSongs.GodSongsScreen
+import kotlinx.parcelize.Parcelize
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -57,7 +59,10 @@ fun ImageGalleryScreen(
     )
 }
 
-private sealed class GodDestination(val godName: String) {
+@Parcelize
+private sealed class GodDestination(val godName: String) : Parcelable {
+    @Parcelize
     data class GodDetails(val name: String) : GodDestination(name)
+    @Parcelize
     data class GodDetailsSongs(val name: String) : GodDestination(name)
 }
