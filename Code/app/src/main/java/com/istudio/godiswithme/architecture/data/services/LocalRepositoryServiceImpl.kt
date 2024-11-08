@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.data.repositoryimpl
+package com.istudio.godiswithme.architecture.data.services
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -7,7 +7,6 @@ import com.istudio.godiswithme.application.APP_TAG
 import com.istudio.godiswithme.architecture.domain.models.DescriptionData
 import com.istudio.godiswithme.architecture.domain.models.GodData
 import com.istudio.godiswithme.architecture.domain.models.Song
-import com.istudio.godiswithme.architecture.domain.repository.GodRepository
 import com.istudio.godiswithme.common.managers.AssetManager
 import com.istudio.godiswithme.core.logger.applogger.local.Logger
 import kotlinx.coroutines.flow.Flow
@@ -16,11 +15,11 @@ import kotlinx.serialization.json.Json
 import java.io.IOException
 import java.io.InputStreamReader
 
-class GodRepositoryImpl(
+class LocalRepositoryServiceImpl(
     private val assetManager: AssetManager,
     private val logger: Logger,
     private val context: Context
-): GodRepository {
+) : LocalRepositoryService {
 
     override fun getGodData(godName: String,languageCode: String): Flow<GodData?> = flow {
         try {

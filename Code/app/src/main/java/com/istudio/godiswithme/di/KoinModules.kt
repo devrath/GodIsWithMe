@@ -1,7 +1,8 @@
 package com.istudio.godiswithme.di
 
-import androidx.lifecycle.SavedStateHandle
-import com.istudio.godiswithme.architecture.data.repositoryimpl.GodRepositoryImpl
+import com.istudio.godiswithme.architecture.data.repository.GodRepositoryImpl
+import com.istudio.godiswithme.architecture.data.services.LocalRepositoryService
+import com.istudio.godiswithme.architecture.data.services.LocalRepositoryServiceImpl
 import com.istudio.godiswithme.architecture.domain.repository.GodRepository
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodByNameUseCase
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodSongsByNameUseCase
@@ -30,7 +31,8 @@ val appModule = module{
     single { GetGodsListUseCase(get()) }
     single { GetGodByNameUseCase(get()) }
     single { GetGodSongsByNameUseCase(get()) }
-    single<GodRepository> { GodRepositoryImpl(get(),get(),get()) }
+    single<GodRepository> { GodRepositoryImpl(get()) }
+    single<LocalRepositoryService> { LocalRepositoryServiceImpl(get(),get(),get()) }
 }
 
 val viewModule = module {
