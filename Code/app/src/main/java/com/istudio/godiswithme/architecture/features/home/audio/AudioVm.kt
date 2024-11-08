@@ -37,106 +37,105 @@ class AudioVm(
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    var duration by savedStateHandle.saveable{ mutableLongStateOf(0L) }
-    var progress by savedStateHandle.saveable{ mutableFloatStateOf(0f) }
-    var progressString by savedStateHandle.saveable{ mutableStateOf("00:00") }
+    private var duration by savedStateHandle.saveable { mutableLongStateOf(0L) }
+    var progress by savedStateHandle.saveable { mutableFloatStateOf(0f) }
     var isPlaying by savedStateHandle.saveable { mutableStateOf(false) }
     var currentSelectedAudio by savedStateHandle.saveable { mutableStateOf(initialAudio) }
-    var audioList by savedStateHandle.saveable { mutableStateOf(listOf<Song>()) }
+    var audioList by savedStateHandle.saveable { mutableStateOf(emptyList<Song>()) }
 
-    private val _uiState: MutableStateFlow<UIState> = MutableStateFlow(UIState.Initial)
+    private val _uiState = MutableStateFlow<UIState>(UIState.Initial)
     val uiState: StateFlow<UIState> = _uiState.asStateFlow()
 
-
     init {
-        viewModelScope.launch {
-            audioServiceHandler.audioState.collectLatest { mediaState ->
-                when (mediaState) {
-                    is JetAudioState.Initial -> _uiState.value = UIState.Initial
-                    is JetAudioState.Playing -> isPlaying = mediaState.isPlaying
-                    is JetAudioState.Buffering -> calculateProgressValue(mediaState.progress)
-                    is JetAudioState.Progress -> calculateProgressValue(mediaState.progress)
-                    is JetAudioState.CurrentPlaying ->  currentSelectedAudio = audioList[mediaState.mediaItemIndex]
-                    is JetAudioState.Ready ->  {
-                        duration = mediaState.duration
-                        _uiState.value = UIState.Ready
-                    }
-                }
+        observeAudioState()
+    }
+
+    private fun observeAudioState() = viewModelScope.launch {
+        audioServiceHandler.audioState.collectLatest { mediaState ->
+            handleMediaState(mediaState)
+        }
+    }
+
+    private fun handleMediaState(mediaState: JetAudioState) {
+        when (mediaState) {
+            is JetAudioState.Initial -> _uiState.value = UIState.Initial
+            is JetAudioState.Playing -> isPlaying = mediaState.isPlaying
+            is JetAudioState.Buffering -> calculateProgressValue(mediaState.progress)
+            is JetAudioState.Progress -> calculateProgressValue(mediaState.progress)
+            is JetAudioState.CurrentPlaying -> updateCurrentSelectedAudio(mediaState.mediaItemIndex)
+            is JetAudioState.Ready -> {
+                duration = mediaState.duration
+                _uiState.value = UIState.Ready
             }
         }
     }
 
-    fun loadAudioData(godName: String) {
-        viewModelScope.launch {
-            getGodSongsByNameUseCase.invoke(godName).collect { godData ->
-                logger.d("result",godData.toString())
-                audioList = godData
-                setMediaItems()
-            }
+    private fun updateCurrentSelectedAudio(index: Int) {
+        currentSelectedAudio = audioList.getOrNull(index) ?: initialAudio
+    }
+
+    fun loadAudioData(godName: String) = viewModelScope.launch {
+        getGodSongsByNameUseCase(godName).collect { godData ->
+            logger.d("result", godData.toString())
+            audioList = godData
+            setMediaItems()
         }
     }
 
     private fun calculateProgressValue(currentProgress: Long) {
-        progress =
-            if (currentProgress > 0) ((currentProgress.toFloat() / duration.toFloat()) * 100f)
-            else 0f
-        progressString = formatDuration(currentProgress)
+        progress = if (currentProgress > 0) {
+            (currentProgress.toFloat() / duration * 100f)
+        } else 0f
     }
 
     private fun setMediaItems() {
-        audioList.map { audio ->
-            MediaItem.fromUri(Uri.parse(audio.songLocation))
-        }.also {
-            audioServiceHandler.setMediaItemList(it)
-        }
+        val mediaItems = audioList.map { MediaItem.fromUri(Uri.parse(it.songLocation)) }
+        audioServiceHandler.setMediaItemList(mediaItems)
     }
 
     fun onUiEvents(uiEvents: UIEvents) = viewModelScope.launch {
-        // Communicate to the audioService handler so it upd
+        handleUiEvents(uiEvents)
+    }
+
+    private suspend fun handleUiEvents(uiEvents: UIEvents) {
         audioServiceHandler.apply {
             when (uiEvents) {
-                is UIEvents.Backward -> onPlayerEvents(PlayerEvent.Backward)
-                is UIEvents.Forward -> onPlayerEvents(PlayerEvent.Forward)
-                is UIEvents.SeekToNext -> onPlayerEvents(PlayerEvent.SeekToNext)
                 is UIEvents.PlayPause -> onPlayerEvents(PlayerEvent.PlayPause)
-
-                is UIEvents.SeekTo -> {
-                    onPlayerEvents(
-                        PlayerEvent.SeekTo,
-                        seekPosition = ((duration * uiEvents.position) / 100f).toLong()
-                    )
-                }
-
-                is UIEvents.SelectedAudioChange -> {
-                    onPlayerEvents(
-                        PlayerEvent.SelectedAudioChange,
-                        selectedAudioIndex = uiEvents.index
-                    )
-                }
-
+                is UIEvents.SeekTo -> onPlayerEvents(
+                    PlayerEvent.SeekTo,
+                    seekPosition = calculateSeekPosition(uiEvents.position)
+                )
+                is UIEvents.SelectedAudioChange -> onPlayerEvents(
+                    PlayerEvent.SelectedAudioChange,
+                    selectedAudioIndex = uiEvents.index
+                )
                 is UIEvents.UpdateProgress -> {
                     onPlayerEvents(PlayerEvent.UpdateProgress(uiEvents.newProgress))
                     progress = uiEvents.newProgress
                 }
+                is UIEvents.SeekToNext -> onPlayerEvents(PlayerEvent.SeekToNext)
+                is UIEvents.Backward -> onPlayerEvents(PlayerEvent.Backward)
+                is UIEvents.Forward -> onPlayerEvents(PlayerEvent.Forward)
             }
         }
     }
 
+    private fun calculateSeekPosition(position: Float) =
+        ((duration * position) / 100f).toLong()
+
     @SuppressLint("DefaultLocale")
-    fun formatDuration(duration: Long): String {
-        val minute = TimeUnit.MINUTES.convert(duration, TimeUnit.MILLISECONDS)
-        val seconds = (minute) - minute * TimeUnit.SECONDS.convert(1, TimeUnit.MINUTES)
-        return String.format("%02d:%02d", minute, seconds)
+    private fun formatDuration(duration: Long): String {
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(duration)
+        val seconds = TimeUnit.MILLISECONDS.toSeconds(duration) % 60
+        return String.format("%02d:%02d", minutes, seconds)
     }
 
     override fun onCleared() {
+        super.onCleared()
         viewModelScope.launch {
             audioServiceHandler.onPlayerEvents(PlayerEvent.Stop)
         }
-        super.onCleared()
     }
-
-
 }
 
 sealed class UIEvents {

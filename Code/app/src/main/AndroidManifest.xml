@@ -17,7 +17,7 @@
         <activity
             android:name=".main.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.GodIsWithMe">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
         </activity>
         <service
             android:name=".core.player.service.JetAudioService"
-            android:exported="true"
+            android:exported="false"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>
                 <action android:name="androidx.media3.session.MediaSessionService" />
