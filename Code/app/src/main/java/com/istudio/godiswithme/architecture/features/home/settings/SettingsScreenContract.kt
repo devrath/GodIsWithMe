@@ -8,7 +8,7 @@ interface SettingsScreenContract {
     )
 
     sealed interface UiAction {
-        data object OnLanguageChangeClick : UiAction
+        data class UpdateLanguageSelectionState(val isDisplayed: Boolean) : UiAction
     }
 
     sealed interface SideEffect {

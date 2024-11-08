@@ -25,9 +25,9 @@ class SettingsScreenVm(
 
     override fun onAction(uiAction: UiAction) {
         when (uiAction) {
-            UiAction.OnLanguageChangeClick -> {
-                logger.d(APP_TAG,"Display language selection sheet")
-                updateUiState { copy(isLanguageSelectionDisplayed = true) }
+            is UiAction.UpdateLanguageSelectionState -> {
+                logger.d(APP_TAG,"Language selection state:-> ${uiAction.isDisplayed}")
+                updateUiState { copy(isLanguageSelectionDisplayed = uiAction.isDisplayed) }
             }
         }
     }
