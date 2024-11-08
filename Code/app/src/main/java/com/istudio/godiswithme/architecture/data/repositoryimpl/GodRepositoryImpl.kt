@@ -1,10 +1,8 @@
 package com.istudio.godiswithme.architecture.data.repositoryimpl
 
-import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import com.istudio.godiswithme.application.APP_TAG
 import com.istudio.godiswithme.architecture.domain.models.DescriptionData
 import com.istudio.godiswithme.architecture.domain.models.GodData
@@ -55,11 +53,11 @@ class GodRepositoryImpl(
     }
 
     override fun getAudioList(godName: String): Flow<List<Song>> = flow {
-        val descriptionPath = "$ROOT_LOCATION/$godName/$GOD_DESCRIPTION_LOCATION"
-        val descriptionData = loadDescriptionData(descriptionPath)
-        val songsPath = "$ROOT_LOCATION/$godName/$GOD_SONGS_LOCATION"
+        val descriptionPath = constructPath(godName, GOD_DESCRIPTION_LOCATION)
+        val songsPath = constructPath(godName, GOD_SONGS_LOCATION)
 
-        val data = descriptionData?.data?.firstOrNull { it.languageCode == "en" }
+        val descriptionData = parseJsonDataToModel(descriptionPath)
+        val data = mapGodDataWithLanguageCode(descriptionData, "en")
 
         val songsList = data?.songs?.map { song ->
             song.songLocation = songsPath.plus("/").plus(song.songLocation)
@@ -69,58 +67,83 @@ class GodRepositoryImpl(
         emit(songsList)
     }
 
-    private fun getMp3UriFromAssets(fileName: String): Uri {
-        val assetFileDescriptor = context.assets.openFd(fileName)
-        val uri = Uri.parse(
-            ContentResolver.SCHEME_FILE + "://" + assetFileDescriptor.fileDescriptor
-        )
-        assetFileDescriptor.close()
-        return uri
-    }
 
-    private fun loadGodData(godFolder: String): GodData? {
-        val coverImagePath = "$ROOT_LOCATION/$godFolder/$COVER_IMAGE_LOCATION"
-        val descriptionPath = "$ROOT_LOCATION/$godFolder/$GOD_DESCRIPTION_LOCATION"
+    /**
+     * ******************************* Helper functions  *******************************************
+     */
+    /**
+     * Get the god data in model w.r.t the god folder name
+     */
+    private fun loadGodData(godName: String): GodData? {
+        val coverImagePath = constructPath(godName, COVER_IMAGE_LOCATION)
+        val descriptionPath = constructPath(godName, GOD_DESCRIPTION_LOCATION)
 
-        val godImageBitmap = getImageBitMap(coverImagePath) ?: return null
-        val descriptionData = loadDescriptionData(descriptionPath) ?: return null
+        val godImageBitmap = getGodImageAsBitmapFromAssets(coverImagePath) ?: return null
+        val descriptionData = parseJsonDataToModel(descriptionPath) ?: return null
 
-        val englishData = descriptionData.data.firstOrNull { it.languageCode == "en" }
+        val data = mapGodDataWithLanguageCode(descriptionData, "en")
 
         return GodData(
             godName = descriptionData.metaData.godName,
-            languageCode = englishData?.languageCode.orEmpty(),
-            language = englishData?.language.orEmpty(),
-            description = englishData?.description.orEmpty(),
+            languageCode = data?.languageCode.orEmpty(),
+            language = data?.language.orEmpty(),
+            description = data?.description.orEmpty(),
             godImageUri = coverImagePath,
             godImageBitmap = godImageBitmap
         )
     }
 
-    private fun getImageBitMap(path: String): Bitmap? {
-        return try {
-            assetManager.provide()?.open(path)?.use { inputStream ->
-                BitmapFactory.decodeStream(inputStream)
-            }
-        } catch (e: Exception) {
-            logger.e(APP_TAG, e.message.orEmpty(), e)
-            null
-        }
+    /**
+     * Construct the path for base folder with root location and relative location
+     */
+    private fun constructPath(baseFolder: String, relativeLocation: String): String {
+        return "$ROOT_LOCATION/$baseFolder/$relativeLocation"
     }
 
-    private fun loadDescriptionData(path: String): DescriptionData? = loadJsonData(path)
+    /**
+     * Retrieves a Bitmap image from the given asset file path.
+     *
+     * @param path The file path of the asset.
+     * @return The Bitmap object, or null if an error occurs.
+     */
+    private fun getGodImageAsBitmapFromAssets(path: String): Bitmap? =
+        runCatching {
+            dataAsStream(path).use(BitmapFactory::decodeStream)
+        }.onFailure { e ->
+            logger.e(APP_TAG, e.message.orEmpty(), e)
+        }.getOrNull()
 
-    private inline fun <reified T> loadJsonData(path: String): T? {
+    /**
+     * Parses JSON data from the given file path into a DescriptionData object.
+     *
+     * @param path The file path containing the JSON data.
+     * @return The parsed DescriptionData object, or null if an error occurs.
+     */
+    private fun parseJsonDataToModel(path: String): DescriptionData? {
         return try {
-            assetManager.provide()?.open(path).use { inputStream ->
+            dataAsStream(path).use { inputStream ->
                 val reader = InputStreamReader(inputStream)
-                Json.decodeFromString<T>(reader.readText())
+                Json.decodeFromString<DescriptionData>(reader.readText())
             }
         } catch (e: IOException) {
             logger.e(APP_TAG, e.message.orEmpty(), e)
             null
         }
     }
+
+    /**
+     * We pass the path of the file and get the file as steam of data
+     */
+    private fun dataAsStream(path: String) = assetManager.provide()?.open(path)
+
+    /**
+     * Get the God Data from list of god data based on language
+     */
+    private fun mapGodDataWithLanguageCode(descriptionData: DescriptionData?, languageCode: String) =
+        descriptionData?.data?.firstOrNull { it.languageCode == languageCode }
+    /**
+     * ******************************* Helper functions  *******************************************
+     */
 
     companion object {
         const val ROOT_LOCATION = "inventory/gods"
