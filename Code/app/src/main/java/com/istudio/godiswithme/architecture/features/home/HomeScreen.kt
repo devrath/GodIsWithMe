@@ -20,10 +20,12 @@ import androidx.window.core.layout.WindowWidthSizeClass
 import com.istudio.godiswithme.R
 import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreen
 import com.istudio.godiswithme.architecture.features.home.gods.ImageGalleryScreen
+import com.istudio.godiswithme.architecture.features.home.settings.AppLanguage
 
 @Composable
 fun HomeScreen(
     navController: NavHostController,
+    languageSelected: (AppLanguage) -> Unit,
     invokeAudioService : () -> Unit
 ) {
 
@@ -47,7 +49,7 @@ fun HomeScreen(
     {
         when (selected.value) {
             HomeDest.GODS_GALLERY.name -> ImageGalleryScreen(invokeAudioService = invokeAudioService)
-            HomeDest.SETTINGS.name -> SettingsScreen()
+            HomeDest.SETTINGS.name -> SettingsScreen(languageSelected = languageSelected)
         }
     }
 }

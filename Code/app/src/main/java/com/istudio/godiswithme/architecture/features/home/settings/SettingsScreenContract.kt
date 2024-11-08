@@ -4,14 +4,23 @@ interface SettingsScreenContract {
     data class UiState(
         val isLoading: Boolean = true,
         val isLanguageSelectionDisplayed: Boolean = false,
-        val language: AppLanguage = AppLanguage.English
+        val selectedLanguage: AppLanguage = AppLanguage.English,
+        val languages : List<AppLanguage>
     )
 
     sealed interface UiAction {
-        data class UpdateLanguageSelectionState(val isDisplayed: Boolean) : UiAction
+        data class UpdateLanguageSelectionState(
+            val isDisplayed: Boolean,
+            val language: AppLanguage
+        ) : UiAction
+        data class UserUpdatedLanguage(
+            val isDisplayed: Boolean,
+            val language: AppLanguage
+        ) : UiAction
     }
 
     sealed interface SideEffect {
         data object DisplayError : SideEffect
+        data class LanguageUpdated(val language: AppLanguage) : SideEffect
     }
 }

@@ -38,8 +38,8 @@ val appModule = module{
 val viewModule = module {
     viewModel { MainVm(get()) }
     viewModel { GodGalleryVm(get(),get(),get()) }
-    viewModel { GodScreenVm(get(),get()) }
-    viewModel { GodDetailsVm(get(),get()) }
+    viewModel { GodScreenVm(get(),get(),get()) }
+    viewModel { GodDetailsVm(get(),get(),get()) }
     viewModel { GodSongsVm(get(),get(),get()) }
     viewModel { AudioVm(get(),get(),get(),get(),get()) }
     viewModel { SettingsScreenVm(get(),get()) }

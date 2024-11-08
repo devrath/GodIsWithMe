@@ -26,8 +26,24 @@ class SettingsScreenVm(
     override fun onAction(uiAction: UiAction) {
         when (uiAction) {
             is UiAction.UpdateLanguageSelectionState -> {
-                logger.d(APP_TAG,"Language selection state:-> ${uiAction.isDisplayed}")
-                updateUiState { copy(isLanguageSelectionDisplayed = uiAction.isDisplayed) }
+                logger.d(APP_TAG, "Language selection state:-> ${uiAction.isDisplayed}")
+                updateUiState {
+                    copy(
+                        isLanguageSelectionDisplayed = uiAction.isDisplayed,
+                        selectedLanguage = uiAction.language
+                    )
+                }
+            }
+
+            is UiAction.UserUpdatedLanguage -> {
+                logger.d(APP_TAG, "User updated selection:-> ${uiAction.isDisplayed}")
+                updateUiState {
+                    copy(
+                        isLanguageSelectionDisplayed = uiAction.isDisplayed,
+                        selectedLanguage = uiAction.language
+                    )
+                }
+                viewModelScope.emitSideEffect(SideEffect.LanguageUpdated(uiAction.language))
             }
         }
     }
@@ -35,14 +51,19 @@ class SettingsScreenVm(
     private fun initSettingsScreen() = runCatching {
         val currentLanguageCode = locale.language
         val currentLanguageName = AppLanguage.fromCode(currentLanguageCode)
-        logger.d(APP_TAG,"Current Language code ----> $currentLanguageCode")
-        logger.d(APP_TAG,"Current Language name ----> ${currentLanguageName.displayName}")
-        updateUiState { copy(language = currentLanguageName) }
+        logger.d(APP_TAG, "Current Language code ----> $currentLanguageCode")
+        logger.d(APP_TAG, "Current Language name ----> ${currentLanguageName.displayName}")
+        updateUiState {
+            copy(
+                selectedLanguage = currentLanguageName,
+                languages = AppLanguage.getAllLanguages()
+            )
+        }
     }.getOrElse {
-        logger.d(APP_TAG,"Exception occurred while initializing the language")
-        updateUiState { copy(language = AppLanguage.English) }
+        logger.d(APP_TAG, "Exception occurred while initializing the language")
+        updateUiState { copy(selectedLanguage = AppLanguage.English) }
     }
 
 }
 
-private fun initialUiState(): UiState = UiState(isLoading = true)
+private fun initialUiState(): UiState = UiState(isLoading = true, languages = AppLanguage.getAllLanguages())

@@ -12,9 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
 import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreenContract.UiState
@@ -40,10 +38,13 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SettingsScreen(modifier: Modifier = Modifier) {
+fun SettingsScreen(
+    modifier: Modifier = Modifier,
+    languageSelected: (AppLanguage) -> Unit
+) {
     val viewModel: SettingsScreenVm = koinViewModel()
     val (uiState, onAction, sideEffect) = viewModel.unpack()
-    CurrentScreen(uiState, sideEffect, onAction)
+    CurrentScreen(uiState, sideEffect, onAction, languageSelected)
 }
 
 @Composable
@@ -51,6 +52,7 @@ private fun CurrentScreen(
     uiState: UiState,
     sideEffect: Flow<SideEffect>,
     onAction: (UiAction) -> Unit,
+    languageSelected: (AppLanguage) -> Unit,
 ) {
     val context = LocalContext.current
     val languageCoroutineScope = rememberCoroutineScope()
@@ -62,13 +64,35 @@ private fun CurrentScreen(
             SideEffect.DisplayError -> {
                 Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
             }
+
+            is SideEffect.LanguageUpdated -> languageSelected(it.language)
         }
     }
 
 
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
-        sheetContent = { LanguageSelectionContent() },
+        sheetContent = {
+            LanguageSelectionBottomSheet(
+                sheetState = sheetState,
+                isLanguageSelectionDisplayed = uiState.isLanguageSelectionDisplayed,
+                onDismissRequest = { languageCoroutineScope.launch { sheetState.hide() } }
+            ) {
+                LanguageSelectionContent(
+                    languages = uiState.languages,
+                    languageSelectionClick = { selectedLanguage ->
+                        languageCoroutineScope.launch {
+                            onAction(
+                                UiAction.UserUpdatedLanguage(
+                                    isDisplayed = false, language = selectedLanguage
+                                )
+                            )
+                            sheetState.hide()
+                        }
+                    }
+                )
+            }
+        },
         sheetPeekHeight = 0.dp
     ) {
 
@@ -86,43 +110,33 @@ private fun CurrentScreen(
                 SettingsRow(
                     rowImage = rowImage,
                     rowName = language,
-                    selectedLanguage = uiState.language.displayName,
-                ){
+                    selectedLanguage = uiState.selectedLanguage.displayName,
+                ) {
                     languageCoroutineScope.launch {
-                        onAction(UiAction.UpdateLanguageSelectionState(isDisplayed = true))
+                        onAction(
+                            UiAction.UpdateLanguageSelectionState(
+                                isDisplayed = true, language = uiState.selectedLanguage
+                            )
+                        )
                         sheetState.show()
                     }
                 }
             }
         }
         // ---------> Entire screen content --------->
-
-        LanguageSelectionBottomSheet(
-            sheetState = sheetState,
-            isLanguageSelectionDisplayed = uiState.isLanguageSelectionDisplayed,
-            onDismissRequest = {
-                languageCoroutineScope.launch {
-                    onAction(UiAction.UpdateLanguageSelectionState(isDisplayed = false))
-                    sheetState.hide()
-                }
-            }
-        ) {
-            LanguageSelectionContent()
-        }
     }
 
 }
-
 
 
 @WindowSizeClassPreviews
 @Composable
 private fun MainScreenPreview() {
     GodIsWithMeTheme {
-        CurrentScreen(
-            uiState = UiState(),
-            sideEffect = emptyFlow(),
-            onAction = {}
-        )
+        /* CurrentScreen(
+             uiState = UiState(),
+             sideEffect = emptyFlow(),
+             onAction = {}
+         )*/
     }
 }

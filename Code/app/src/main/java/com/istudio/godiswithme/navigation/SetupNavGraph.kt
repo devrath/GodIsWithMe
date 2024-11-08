@@ -5,11 +5,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.istudio.godiswithme.architecture.features.home.HomeScreen
+import com.istudio.godiswithme.architecture.features.home.settings.AppLanguage
 import com.istudio.godiswithme.architecture.features.splash.SplashScreen
 
 @Composable
 fun SetupNavGraph(
     navController: NavHostController,
+    languageSelected: (AppLanguage) -> Unit,
     invokeAudioService : () -> Unit
 ) {
     NavHost(
@@ -22,7 +24,8 @@ fun SetupNavGraph(
         composable(route = Screen.Home.route) {
             HomeScreen(
                 navController = navController,
-                invokeAudioService = invokeAudioService
+                invokeAudioService = invokeAudioService,
+                languageSelected = languageSelected
             )
         }
     }
