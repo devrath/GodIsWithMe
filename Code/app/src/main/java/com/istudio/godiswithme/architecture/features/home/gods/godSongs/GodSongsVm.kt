@@ -11,10 +11,12 @@ import com.istudio.godiswithme.common.mvi.MVI
 import com.istudio.godiswithme.common.mvi.mvi
 import com.istudio.godiswithme.core.logger.applogger.local.Logger
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class GodSongsVm(
     private val getGodSongsByNameUseCase: GetGodSongsByNameUseCase,
-    private val logger: Logger
+    private val logger: Logger,
+    private val locale: Locale
 ) : ViewModel() , MVI<UiState, UiAction, SideEffect> by mvi(initialUiState()) {
 
     override fun onAction(uiAction: UiAction) {
@@ -26,7 +28,10 @@ class GodSongsVm(
 
     private fun lodGodData(godName: String) {
         viewModelScope.launch {
-            getGodSongsByNameUseCase.invoke(godName).collect { godData ->
+            val input = GetGodSongsByNameUseCase.Param(
+                godName = godName, languageCode = locale.language
+            )
+            getGodSongsByNameUseCase.invoke(input).collect { godData ->
                 // Handle the list of gods here
                 logger.d("result",godData.toString())
             }

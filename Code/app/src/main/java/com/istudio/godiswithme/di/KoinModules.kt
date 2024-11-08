@@ -21,9 +21,11 @@ import com.istudio.godiswithme.common.managers.AssetManager
 import com.istudio.godiswithme.main.MainVm
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import java.util.Locale
 
 val appModule = module{
     single { AssetManager(get()) }
+    single { Locale.getDefault() }
     single { GetGodsListUseCase(get()) }
     single { GetGodByNameUseCase(get()) }
     single { GetGodSongsByNameUseCase(get()) }
@@ -32,11 +34,11 @@ val appModule = module{
 
 val viewModule = module {
     viewModel { MainVm(get()) }
-    viewModel { GodGalleryVm(get(),get()) }
+    viewModel { GodGalleryVm(get(),get(),get()) }
     viewModel { GodScreenVm(get(),get()) }
     viewModel { GodDetailsVm(get(),get()) }
-    viewModel { GodSongsVm(get(),get()) }
-    viewModel { AudioVm(get(),get(),get(),get()) }
+    viewModel { GodSongsVm(get(),get(),get()) }
+    viewModel { AudioVm(get(),get(),get(),get(),get()) }
 }
 
 val loggerParentModule = module {

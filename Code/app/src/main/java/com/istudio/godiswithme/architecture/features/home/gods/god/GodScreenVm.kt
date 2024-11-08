@@ -25,7 +25,8 @@ class GodScreenVm(
 
     private fun lodGodData(godName: String) {
         viewModelScope.launch {
-            getGodByNameUseCase.invoke(godName).collect { godData ->
+            val input = GetGodByNameUseCase.Param(godName = godName, languageCode = "en")
+            getGodByNameUseCase.invoke(input).collect { godData ->
                 // Handle the list of gods here
                 logger.d("result",godData.toString())
                 updateUiState { copy(godData = godData) }

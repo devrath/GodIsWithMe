@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 
@@ -34,6 +35,7 @@ class AudioVm(
     private val getGodSongsByNameUseCase: GetGodSongsByNameUseCase,
     private val audioServiceHandler: JetAudioServiceHandler,
     private val logger: Logger,
+    private val locale: Locale,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -75,7 +77,10 @@ class AudioVm(
     }
 
     fun loadAudioData(godName: String) = viewModelScope.launch {
-        getGodSongsByNameUseCase(godName).collect { godData ->
+        val input = GetGodSongsByNameUseCase.Param(
+            godName = godName, languageCode = locale.language
+        )
+        getGodSongsByNameUseCase(input).collect { godData ->
             logger.d("result", godData.toString())
             audioList = godData
             setMediaItems()
