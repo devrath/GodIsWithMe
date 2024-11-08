@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.window.core.layout.WindowWidthSizeClass
 import com.istudio.godiswithme.R
-import com.istudio.godiswithme.architecture.features.home.settings.Settings
+import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreen
 import com.istudio.godiswithme.architecture.features.home.gods.ImageGalleryScreen
 
 @Composable
@@ -47,7 +47,7 @@ fun HomeScreen(
     {
         when (selected.value) {
             HomeDest.GODS_GALLERY.name -> ImageGalleryScreen(invokeAudioService = invokeAudioService)
-            HomeDest.SETTINGS.name -> Settings()
+            HomeDest.SETTINGS.name -> SettingsScreen()
         }
     }
 }

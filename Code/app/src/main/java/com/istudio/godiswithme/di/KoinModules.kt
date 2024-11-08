@@ -17,6 +17,7 @@ import com.istudio.godiswithme.core.logger.di.timberReleaseModule
 import com.istudio.godiswithme.architecture.features.home.gods.godgallery.GodGalleryVm
 import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenVm
 import com.istudio.godiswithme.architecture.features.home.gods.godSongs.GodSongsVm
+import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreenVm
 import com.istudio.godiswithme.common.managers.AssetManager
 import com.istudio.godiswithme.main.MainVm
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -39,6 +40,7 @@ val viewModule = module {
     viewModel { GodDetailsVm(get(),get()) }
     viewModel { GodSongsVm(get(),get(),get()) }
     viewModel { AudioVm(get(),get(),get(),get(),get()) }
+    viewModel { SettingsScreenVm(get(),get()) }
 }
 
 val loggerParentModule = module {
