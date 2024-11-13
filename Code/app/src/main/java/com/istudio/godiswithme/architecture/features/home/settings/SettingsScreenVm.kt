@@ -25,25 +25,18 @@ class SettingsScreenVm(
 
     override fun onAction(uiAction: UiAction) {
         when (uiAction) {
-            is UiAction.UpdateLanguageSelectionState -> {
-                logger.d(APP_TAG, "Language selection state:-> ${uiAction.isDisplayed}")
-                updateUiState {
-                    copy(
-                        isLanguageSelectionDisplayed = uiAction.isDisplayed,
-                        selectedLanguage = uiAction.language
-                    )
-                }
+            // User made a new selection from list of languages from bottom sheet
+            is UiAction.UserUpdatedLanguage -> {
+                logger.d(APP_TAG, "User selected language:-> ${uiAction.language}")
+                // Update the view model state
+                updateUiState { copy(selectedLanguage = uiAction.language) }
+                // Emit a side-effect making the the activity to restart
+                viewModelScope.emitSideEffect(SideEffect.LanguageUpdated(uiAction.language))
             }
 
-            is UiAction.UserUpdatedLanguage -> {
-                logger.d(APP_TAG, "User updated selection:-> ${uiAction.isDisplayed}")
-                updateUiState {
-                    copy(
-                        isLanguageSelectionDisplayed = uiAction.isDisplayed,
-                        selectedLanguage = uiAction.language
-                    )
-                }
-                viewModelScope.emitSideEffect(SideEffect.LanguageUpdated(uiAction.language))
+            // User has clicked dismiss of language list
+            is UiAction.LanguageSelectionDismissed -> {
+                updateUiState { copy(isLanguageSelectionDisplayed = uiAction.isDisplayed) }
             }
         }
     }
@@ -61,7 +54,7 @@ class SettingsScreenVm(
         }
     }.getOrElse {
         logger.d(APP_TAG, "Exception occurred while initializing the language")
-        updateUiState { copy(selectedLanguage = AppLanguage.English) }
+        updateUiState { copy(selectedLanguage = AppLanguage.Default) }
     }
 
 }

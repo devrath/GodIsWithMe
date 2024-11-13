@@ -83,10 +83,10 @@ class MainActivity : ComponentActivity() {
 
         val config = resources.configuration
         config.setLocale(locale)
-        resources.updateConfiguration(config, resources.displayMetrics)
+        val newContext = createConfigurationContext(config)
 
         // Restart the activity
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(newContext, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
