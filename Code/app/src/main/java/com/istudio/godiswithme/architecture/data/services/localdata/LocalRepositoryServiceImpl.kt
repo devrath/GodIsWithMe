@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.data.services
+package com.istudio.godiswithme.architecture.data.services.localdata
 
 import android.content.Context
 import android.graphics.Bitmap

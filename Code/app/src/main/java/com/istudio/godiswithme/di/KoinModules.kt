@@ -1,8 +1,8 @@
 package com.istudio.godiswithme.di
 
 import com.istudio.godiswithme.architecture.data.repository.GodRepositoryImpl
-import com.istudio.godiswithme.architecture.data.services.LocalRepositoryService
-import com.istudio.godiswithme.architecture.data.services.LocalRepositoryServiceImpl
+import com.istudio.godiswithme.architecture.data.services.localdata.LocalRepositoryService
+import com.istudio.godiswithme.architecture.data.services.localdata.LocalRepositoryServiceImpl
 import com.istudio.godiswithme.architecture.domain.repository.GodRepository
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodByNameUseCase
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodSongsByNameUseCase

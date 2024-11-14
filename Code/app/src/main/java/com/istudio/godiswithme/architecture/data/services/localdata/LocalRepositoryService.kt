@@ -1,4 +1,4 @@
-package com.istudio.godiswithme.architecture.data.services
+package com.istudio.godiswithme.architecture.data.services.localdata
 
 import com.istudio.godiswithme.architecture.domain.models.GodData
 import com.istudio.godiswithme.architecture.domain.models.Song

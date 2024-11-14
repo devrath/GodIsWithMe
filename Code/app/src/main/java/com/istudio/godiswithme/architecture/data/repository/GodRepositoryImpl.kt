@@ -1,6 +1,6 @@
 package com.istudio.godiswithme.architecture.data.repository
 
-import com.istudio.godiswithme.architecture.data.services.LocalRepositoryService
+import com.istudio.godiswithme.architecture.data.services.localdata.LocalRepositoryService
 import com.istudio.godiswithme.architecture.domain.repository.GodRepository
 
 class GodRepositoryImpl(
