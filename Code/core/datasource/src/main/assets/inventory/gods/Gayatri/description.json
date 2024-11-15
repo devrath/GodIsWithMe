@@ -1,9 +1,21 @@
 {
   "meta-data": {
     "Supported-languages": [
-      "English",
-      "Kannada",
-      "Hindi"
+      {
+        "language": "English",
+        "language-code": "en",
+        "god-name": "Gayatri"
+      },
+      {
+        "language": "Kannada",
+        "language-code": "kn",
+        "god-name": "ಗಾಯತ್ರಿ"
+      },
+      {
+        "language": "Hindi",
+        "language-code": "hi",
+        "god-name": "गायत्री"
+      }
     ],
     "GodName": "Gayatri"
   },

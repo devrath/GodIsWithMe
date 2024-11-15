@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MetaData(
-    @SerialName("Supported-languages") val supportedLanguages: List<String>,
-    @SerialName("GodName") val godName:String
+    @SerialName("Supported-languages") val supportedLanguages: List<SupportedLanguage>,
+    @SerialName("GodName") val godName: String
 )
+

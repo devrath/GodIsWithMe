@@ -1,9 +1,21 @@
 {
   "meta-data": {
     "Supported-languages": [
-      "English",
-      "Kannada",
-      "Hindi"
+      {
+        "language": "English",
+        "language-code": "en",
+        "god-name": "Lakshmi"
+      },
+      {
+        "language": "Kannada",
+        "language-code": "kn",
+        "god-name": "ಲಕ್ಷ್ಮಿ"
+      },
+      {
+        "language": "Hindi",
+        "language-code": "hi",
+        "god-name": "लक्ष्मी"
+      }
     ],
     "GodName": "Lakshmi"
   },

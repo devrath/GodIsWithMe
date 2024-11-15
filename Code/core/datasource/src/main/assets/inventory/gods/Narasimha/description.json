@@ -1,9 +1,21 @@
 {
   "meta-data": {
     "Supported-languages": [
-      "English",
-      "Kannada",
-      "Hindi"
+      {
+        "language": "English",
+        "language-code": "en",
+        "god-name": "Narasimha"
+      },
+      {
+        "language": "Kannada",
+        "language-code": "kn",
+        "god-name": "ನರಸಿಂಹ"
+      },
+      {
+        "language": "Hindi",
+        "language-code": "hi",
+        "god-name": "नरसिंह"
+      }
     ],
     "GodName": "Narasimha"
   },

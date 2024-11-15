@@ -81,9 +81,10 @@ class LocalRepositoryServiceImpl(
         val descriptionData = parseJsonDataToModel(descriptionPath) ?: return null
 
         val data = mapGodDataWithLanguageCode(descriptionData, languageCode)
+        val godNameAsLanguage = mapGodNameWithLanguageCode(descriptionData, languageCode)
 
         return GodData(
-            godName = descriptionData.metaData.godName,
+            godName = godNameAsLanguage,
             languageCode = data?.languageCode.orEmpty(),
             language = data?.language.orEmpty(),
             description = data?.description.orEmpty(),
@@ -140,6 +141,14 @@ class LocalRepositoryServiceImpl(
      */
     private fun mapGodDataWithLanguageCode(descriptionData: DescriptionData?, languageCode: String) =
         descriptionData?.data?.firstOrNull { it.languageCode == languageCode }
+
+
+    private fun mapGodNameWithLanguageCode(descriptionData: DescriptionData?, languageCode: String): String {
+        return descriptionData?.metaData?.supportedLanguages
+            ?.find { it.languageCode == languageCode }
+            ?.godName ?: descriptionData?.metaData?.godName ?: ""
+    }
+
     /**
      * ******************************* Helper functions  *******************************************
      */

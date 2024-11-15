@@ -1,9 +1,21 @@
 {
   "meta-data": {
     "Supported-languages": [
-      "English",
-      "Kannada",
-      "Hindi"
+      {
+        "language": "English",
+        "language-code": "en",
+        "god-name": "Srinivasa"
+      },
+      {
+        "language": "Kannada",
+        "language-code": "kn",
+        "god-name": "ಶ್ರೀನಿವಾಸ"
+      },
+      {
+        "language": "Hindi",
+        "language-code": "hi",
+        "god-name": "श्रीनिवास"
+      }
     ],
     "GodName": "Srinivasa"
   },
