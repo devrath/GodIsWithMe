@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.istudio.godiswithme.architecture.features.home.HomeScreen
-import com.istudio.godiswithme.architecture.features.home.settings.AppLanguage
+import com.istudio.godiswithme.architecture.data.services.language.AppLanguage
 import com.istudio.godiswithme.architecture.features.splash.SplashScreen
 
 @Composable

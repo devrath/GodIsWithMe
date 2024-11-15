@@ -3,6 +3,7 @@ package com.istudio.godiswithme.architecture.features.home.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.istudio.godiswithme.application.APP_TAG
+import com.istudio.godiswithme.architecture.data.services.language.AppLanguage
 import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreenContract.UiState
 import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreenContract.UiAction
 import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreenContract.SideEffect
@@ -54,7 +55,7 @@ class SettingsScreenVm(
         }
     }.getOrElse {
         logger.d(APP_TAG, "Exception occurred while initializing the language")
-        updateUiState { copy(selectedLanguage = AppLanguage.Default) }
+        updateUiState { copy(selectedLanguage = AppLanguage.English) }
     }
 
 }

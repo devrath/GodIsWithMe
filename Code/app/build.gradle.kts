@@ -43,6 +43,10 @@ android {
     buildFeatures {
         compose = true
     }
+    // This will make our language appear in system settings that provide the option to change the language
+    androidResources {
+        generateLocaleConfig = true
+    }
 }
 
 dependencies {

@@ -1,9 +1,13 @@
 package com.istudio.godiswithme.di
 
 import com.istudio.godiswithme.architecture.data.repository.GodRepositoryImpl
+import com.istudio.godiswithme.architecture.data.repository.LanguageRepositoryImpl
+import com.istudio.godiswithme.architecture.data.services.language.LanguageHelperService
+import com.istudio.godiswithme.architecture.data.services.language.LanguageHelperServiceImpl
 import com.istudio.godiswithme.architecture.data.services.localdata.LocalRepositoryService
 import com.istudio.godiswithme.architecture.data.services.localdata.LocalRepositoryServiceImpl
 import com.istudio.godiswithme.architecture.domain.repository.GodRepository
+import com.istudio.godiswithme.architecture.domain.repository.LanguageRepository
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodByNameUseCase
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodSongsByNameUseCase
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodsListUseCase
@@ -32,7 +36,9 @@ val appModule = module{
     single { GetGodByNameUseCase(get()) }
     single { GetGodSongsByNameUseCase(get()) }
     single<GodRepository> { GodRepositoryImpl(get()) }
+    single<LanguageRepository> { LanguageRepositoryImpl(get()) }
     single<LocalRepositoryService> { LocalRepositoryServiceImpl(get(),get(),get()) }
+    single<LanguageHelperService> { LanguageHelperServiceImpl(get()) }
 }
 
 val viewModule = module {

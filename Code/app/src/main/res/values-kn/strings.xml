@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ದೇವರು ನನ್ನೊಂದಿಗೆ ಇದ್ದಾರೆ</string>
+
+    <string name="settings">ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
+    <string name="gods">ದೇವರುಗಳು</string>
+    <string name="shopping">ಶಾಪಿಂಗ್</string>
+    <string name="profile">ಪ್ರೊಫೈಲ್</string>
+    <string name="str_language">ಭಾಷೆ</string>
+</resources>

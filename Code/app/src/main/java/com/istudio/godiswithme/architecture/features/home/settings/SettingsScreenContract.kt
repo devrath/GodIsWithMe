@@ -1,5 +1,7 @@
 package com.istudio.godiswithme.architecture.features.home.settings
 
+import com.istudio.godiswithme.architecture.data.services.language.AppLanguage
+
 interface SettingsScreenContract {
     data class UiState(
         val isLoading: Boolean = true,

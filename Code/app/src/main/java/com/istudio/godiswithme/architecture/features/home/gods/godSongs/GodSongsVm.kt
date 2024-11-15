@@ -2,6 +2,7 @@ package com.istudio.godiswithme.architecture.features.home.gods.godSongs
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.istudio.godiswithme.architecture.domain.repository.LanguageRepository
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodByNameUseCase
 import com.istudio.godiswithme.architecture.domain.usecases.GetGodSongsByNameUseCase
 import com.istudio.godiswithme.architecture.features.home.gods.god.GodScreenContract.SideEffect
@@ -16,7 +17,7 @@ import java.util.Locale
 class GodSongsVm(
     private val getGodSongsByNameUseCase: GetGodSongsByNameUseCase,
     private val logger: Logger,
-    private val locale: Locale
+    private val languageRepository: LanguageRepository
 ) : ViewModel() , MVI<UiState, UiAction, SideEffect> by mvi(initialUiState()) {
 
     override fun onAction(uiAction: UiAction) {
@@ -29,7 +30,7 @@ class GodSongsVm(
     private fun lodGodData(godName: String) {
         viewModelScope.launch {
             val input = GetGodSongsByNameUseCase.Param(
-                godName = godName, languageCode = locale.language
+                godName = godName, languageCode = languageRepository.getLanguageCode()
             )
             getGodSongsByNameUseCase.invoke(input).collect { godData ->
                 // Handle the list of gods here

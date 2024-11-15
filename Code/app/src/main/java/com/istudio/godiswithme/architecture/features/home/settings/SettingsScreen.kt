@@ -6,13 +6,10 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreenContract.UiState
 import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreenContract.UiAction
@@ -21,11 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.istudio.godiswithme.R
+import com.istudio.godiswithme.architecture.data.services.language.AppLanguage
 import com.istudio.godiswithme.architecture.features.home.settings.composables.SettingsRow
 import com.istudio.godiswithme.architecture.features.home.settings.composables.languageselection.LanguageSelectionBottomSheet
 import com.istudio.godiswithme.architecture.features.home.settings.composables.languageselection.LanguageSelectionContent
@@ -34,7 +30,6 @@ import com.istudio.godiswithme.common.mvi.unpack
 import com.istudio.godiswithme.ux.designsystem.GodIsWithMeTheme
 import com.istudio.godiswithme.ux.designsystem.preview.WindowSizeClassPreviews
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

@@ -20,7 +20,7 @@ import androidx.window.core.layout.WindowWidthSizeClass
 import com.istudio.godiswithme.R
 import com.istudio.godiswithme.architecture.features.home.settings.SettingsScreen
 import com.istudio.godiswithme.architecture.features.home.gods.ImageGalleryScreen
-import com.istudio.godiswithme.architecture.features.home.settings.AppLanguage
+import com.istudio.godiswithme.architecture.data.services.language.AppLanguage
 
 @Composable
 fun HomeScreen(

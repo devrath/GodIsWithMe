@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">भगवान मेरे साथ हैं</string>
+
+    <string name="settings">सेटिंग्स</string>
+    <string name="gods">देवता</string>
+    <string name="shopping">खरीदारी</string>
+    <string name="profile">प्रोफ़ाइल</string>
+    <string name="str_language">भाषा</string>
+</resources>
