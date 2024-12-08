@@ -79,7 +79,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun restartActivityWithSelectedLanguage(it: AppLanguage) {
-        it.code?.let { code -> languageRepository.changeLanguage(code) }
+        it.code?.let { code -> languageRepository.changeLanguage(code,this) }
     }
 }
 
