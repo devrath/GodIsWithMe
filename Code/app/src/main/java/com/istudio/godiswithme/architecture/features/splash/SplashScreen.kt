@@ -1,6 +1,7 @@
 package com.istudio.godiswithme.architecture.features.splash
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -19,9 +20,15 @@ import com.istudio.godiswithme.navigation.Screen
 @Composable
 fun SplashScreen(navController: NavHostController) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
+        modifier = with(Modifier) {
+            fillMaxSize()
+                .background(
+                    when {
+                        isSystemInDarkTheme() ->  Color.Black
+                        else -> Color.White
+                    }
+                )
+        }
     ) {
         val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.splash_animation))
         val logoAnimationState =

@@ -99,7 +99,6 @@ fun GodCard(
     Card(
         modifier = Modifier
             .padding(10.dp)
-            .background(color = Color.White)
             .clickable { onClick() },
         shape = RoundedCornerShape(10.dp)
     ) {
